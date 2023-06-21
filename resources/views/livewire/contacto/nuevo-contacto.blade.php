@@ -3,81 +3,76 @@
 
     <x-jet-dialog-modal wire:model="open" maxWidth="5xl">
         <x-slot name="title">
-            Crear nuevo contacto {{$empresa}}
+            Crear nuevo contacto {{$prospecto_id}}
         </x-slot>
         <x-slot name="content">
             <div class="flex flex-col w-full">
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-full">
                         <x-jet-label value="Nombre del contacto" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="rfc"/>
-                        @error('rfc') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="nombre"/>
+                        @error('nombre') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/3">
                         <x-jet-label value="Posicion en la organizacion" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="razon_social"/>
-                        @error('razon_social') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="posicion"/>
+                        @error('posicion') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
-                    <div class="w-1/3">
+                    <div class="w-2/3">
                         <x-jet-label value="Area" />
-                        <select class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" type="text"  wire:model.defer="razon_social"/>
-                            <option value="Sistemas"></option>
+                        <select class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" type="text"  wire:model.defer="area">
+                            <option value=""></option>
                             <option value="Sistemas">Sistemas</option>
-                            <option value="Sistemas">Ventas</option>
-                            <option value="Sistemas">Finanzas</option>
-                            <option value="Sistemas">Operaciones de Red</option>
-                            <option value="Sistemas">Servicio a Clientes</option>
-                            <option value="Sistemas">Otros</option>
+                            <option value="Ventas">Ventas</option>
+                            <option value="Finanzas">Finanzas</option>
+                            <option value="Operaciones de Red">Operaciones de Red</option>
+                            <option value="Servicio a Clientes">Servicio a Clientes</option>
+                            <option value="Otros">Otros</option>
                         </select>
-                        @error('razon_social') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
-                    </div>
-                    <div class="w-1/3">
-                        <x-jet-label value="Fecha de contacto" />
-                        <x-jet-input class="w-full text-sm" type="date"  wire:model.defer="fecha_io"/>
-                        @error('fecha_io') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        @error('area') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3 pb-3">
                     <div class="w-1/3">
                         <x-jet-label value="Correo 1" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="terminos_pago"/>
-                        @error('terminos_pago') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="correo1"/>
+                        @error('correo1') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Correo 2" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="estatus"/>
-                        @error('estatus') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="correo2"/>
+                        @error('correo2') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Correo 3" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="estatus"/>
-                        @error('estatus') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="correo3"/>
+                        @error('correo3') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3 pb-3">
                     <div class="w-1/3">
                         <x-jet-label value="Telefono 1" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="terminos_pago"/>
-                        @error('terminos_pago') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="telefono1"/>
+                        @error('telefono1') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Telefono 2" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="estatus"/>
-                        @error('estatus') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="telefono2"/>
+                        @error('telefono2') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Telefono 3" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="estatus"/>
-                        @error('estatus') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="telefono3"/>
+                        @error('telefono3') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-full">
                         <x-jet-label value="Notas" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="direccion_calle"/>
-                        @error('direccion_calle') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="notas"/>
+                        @error('notas') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
 
                 </div>

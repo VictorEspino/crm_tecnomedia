@@ -15,7 +15,7 @@
                     </div>
                     <div class="w-1/2">
                         <x-jet-label value="Regimen" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="empresa"/>
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="regimen"/>
                         @error('regimen') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
@@ -37,11 +37,6 @@
                         <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="terminos_pago"/>
                         @error('terminos_pago') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
-                    <div class="w-1/4">
-                        <x-jet-label value="Estatus" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="estatus"/>
-                        @error('estatus') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
-                    </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3 pb-3 border-b">
                     <div class="w-full">
@@ -51,32 +46,32 @@
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/2">
                         <x-jet-label value="Calle" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="direccion_calle"/>
-                        @error('direccion_calle') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="calle"/>
+                        @error('calle') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/2">
                         <x-jet-label value="Colonia" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="direccion_colonia"/>
-                        @error('direccion_colonia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="colonia"/>
+                        @error('colonia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/2">
                         <x-jet-label value="Numero Exterior" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="numero_exterior"/>
-                        @error('numero_exterior') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="num_ext"/>
+                        @error('num_ext') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/2">
                         <x-jet-label value="Numero Interior" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="numero_interior"/>
-                        @error('numero_interior') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="num_int"/>
+                        @error('num_int') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/3">
                         <x-jet-label value="Codigo Postal" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="codigo_postal"/>
-                        @error('codigo_postal') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="cp"/>
+                        @error('cp') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Ciudad" />

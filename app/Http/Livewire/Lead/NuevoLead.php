@@ -8,6 +8,7 @@ use App\Models\ContactoProspecto;
 use App\Models\LineaNegocio;
 use App\Models\Servicio;
 use App\Models\FuenteLead;
+use App\Models\Lead;
 
 class NuevoLead extends Component
 {
@@ -31,9 +32,31 @@ class NuevoLead extends Component
     public $fuente;
     public $fuentes=[];
 
+    public $fecha_contacto;
+    public $oportunidad;
+    public $partner;
+    public $producto;
+    public $comentarios;
+    public $etapa=1;
+
+    public $procesando=0;
+
+    protected $listeners = ['prospectoAgregado' => 'carga_nuevo_prospecto','contactoAgregado'=>'carga_nuevo_contacto'];
+
     public function render()
     {
+        
         return view('livewire.lead.nuevo-lead');
+    }
+    public function carga_nuevo_prospecto()
+    {
+        $this->opcion_empresa=Prospecto::orderBy('razon_social','ASC')->get();
+    }
+    public function carga_nuevo_contacto()
+    {
+        $this->opcion_contacto=ContactoProspecto::where('prospecto_id',$this->empresa)
+                    ->orderBy('nombre','ASC')
+                    ->get();
     }
     public function mount()
     {
@@ -72,6 +95,54 @@ class NuevoLead extends Component
                     ->where('nombre','LIKE','%'.$valor.'%')
                     ->orderBy('nombre','ASC')
                     ->get();
+    }
+
+    public function validacion()
+    {
+        $reglas = [
+            'empresa'=>'required',
+            'contacto'=>'required',
+            'linea_negocio'=>'required',
+            'fecha_contacto'=>'required',
+            'servicio'=>'required',
+            'fuente'=>'required',
+            'oportunidad'=>'required',
+            'partner'=>'required',
+            'producto'=>'required',
+          ];
+        //dd($reglas);
+        $this->validate($reglas,
+            [
+                'required' => 'Campo requerido.',
+                'numeric'=>'Debe ser un numero',
+                'unique'=>'El valor ya existe en la base de datos',
+                'email'=>'Se requiere una direccion de correo valida'
+            ],
+          );
+    }
+    public function guardar()
+    {
+        $this->validacion();
+        $this->procesando=1;
+
+        Lead::create([
+            'prospecto_id'=>$this->empresa,
+            'contacto_prospecto_id'=>$this->contacto,
+            'linea_negocio_id'=>$this->linea_negocio,
+            'servicio_id'=>$this->servicio,
+            'oportunidad'=>$this->oportunidad,
+            'partner'=>$this->partner,
+            'producto'=>$this->producto,
+            'etapa_id'=>$this->etapa,
+            'fuente_id'=>$this->fuente,
+            'fecha_contacto'=>$this->fecha_contacto,
+            'comentarios'=>$this->comentarios
+        ]);
+
+        $this->emit('alert_ok','El lead se creo satisfactoriamente');
+        $this->resetErrorBag();
+        $this->resetValidation();
+        $this->reset();
     }
 
 

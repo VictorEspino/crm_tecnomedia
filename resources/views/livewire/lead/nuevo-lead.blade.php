@@ -16,11 +16,9 @@
             <div class="w-full text-sm">({{Auth::user()->usuario}}) - {{Auth::user()->name}}</div>            
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
-        <form method="post" action="" enctype="multipart/form-data">
-            @csrf
         <div class="w-full p-3 flex flex-col bg-white"> <!--CONTENIDO-->
             <div class="w-full flex flex-row space-x-2">
-                <div class="w-full flex flex-row">
+                <div class="w-full flex flex-row pb-2">
                     <div class="w-4/12">
                         <span class="text-xs text-ttds">Buscar Empresa (Nombre, RFC)</span><br>
                         <input class="w-full rounded p-1 border border-gray-300 bg-white" wire:model="buscar_empresa"> 
@@ -35,13 +33,13 @@
                         </select> 
                         @error('empresa') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
-                    <div class="flex items-end justify-center px-6">
+                    <div class="flex items-center justify-center px-6">
                      @livewire('prospecto.nuevo-prospecto')              
                     </div>
                 </div>                
             </div>
             @if($ver_contacto==1)
-            <div class="w-full flex flex-row space-x-2">
+            <div class="w-full flex flex-row space-x-2 pb-3">
                 <div class="w-full flex flex-row">
                     <div class="w-4/12">
                         <span class="text-xs text-ttds">Buscar Contacto</span><br>
@@ -57,7 +55,7 @@
                         </select> 
                         @error('contacto') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
-                    <div class="flex items-end justify-center px-6">
+                    <div class="flex items-center justify-center px-6">
                      @livewire('contacto.nuevo-contacto')              
                     </div>
                 </div>                
@@ -100,15 +98,18 @@
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Oportunidad</span><br>
-                        <input class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        <input wire:model="oportunidad" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('oportunidad') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Partner/Fabricante</span><br>
-                        <input class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        <input wire:model="partner" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('partner') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Producto</span><br>
-                        <input class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        <input wire:model="producto" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('producto') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
                 </div>                
             </div>
@@ -116,8 +117,9 @@
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Etapa</span><br>
-                        <select class="w-full rounded p-1 border border-gray-300 bg-white"> 
-                            <option value="Nuevo Lead">Nuevo Lead</option>
+                        <select wire:model="etapa" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                            <option value=""></option>
+                            <option value="1">Nuevo Lead</option>
                         </select>
                     </div>
                     <div class="w-1/3">
@@ -132,15 +134,14 @@
                     </div>
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Comentarios</span><br>
-                        <input class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        <input wire:model="comentarios" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                     </div>
 
                 </div>                
             </div>
         </div> <!--FIN CONTENIDO-->
         <div class="w-full flex justify-center py-4 shadow-lg bg-lime-100">
-            <x-jet-button>GUARDAR</x-jet-button>
+            <button wire:click="guardar" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition'">GUARDAR</button>
         </div>
-        </form>
     </div>
 </div>
