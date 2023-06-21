@@ -122,7 +122,7 @@
                                     </a>
                                 </div>     
                                 <div class="pl-5 pt-2 text-yellow-300">
-                                    <a href="{{route('nuevo_lead')}}">
+                                    <a href="{{route('base_leads')}}">
                                         <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
                                         Historial de Leads
                                     </a>

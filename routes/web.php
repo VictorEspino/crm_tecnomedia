@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Usuario\ShowUsuarios;
 use App\Http\Livewire\Lead\NuevoLead;
 
+use App\Http\Controllers\LeadsController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,5 +32,8 @@ Route::middleware([
 });
 
 Route::get('/usuarios',ShowUsuarios::class)->name('usuarios')->middleware('auth');
-Route::get('/nuevo_lead',NuevoLead::class)->name('nuevo_lead')->middleware('auth');
+
 Route::get('/actividades',function (){return view('actividades.calendario_actividades');})->name('actividades')->middleware('auth');
+
+Route::get('/nuevo_lead',NuevoLead::class)->name('nuevo_lead')->middleware('auth');
+Route::get('/base_leads',[LeadsController::class,'base_leads'])->middleware('auth')->name('base_leads');

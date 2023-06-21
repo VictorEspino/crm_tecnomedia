@@ -64,7 +64,21 @@
             <div class="border-t py-2 border-b">
                 <span class="text-red-700 font-bold">Datos del Lead</span>
             </div>
-            <div class="w-full flex flex-row space-x-2 py-3 pb-4">
+            <div class="w-full flex flex-row space-x-2 py-3">
+                <div class="w-full flex flex-row space-x-3">
+                    <div class="w-full">
+                        <x-jet-label value="Compañia" />                    
+                        <select name="compañia" wire:model.defer="compañia" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
+                            <option></option>
+                        @foreach ($compañias as $comp)
+                            <option value="{{$comp->id}}">{{$comp->nombre}}</option>    
+                        @endforeach
+                        </select> 
+                        @error('compañia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror                        
+                    </div>
+                </div>                
+            </div>
+            <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
                         <x-jet-label value="Fecha contacto" />                    
@@ -94,7 +108,7 @@
                     </div>
                 </div>                
             </div>
-            <div class="w-full flex flex-row space-x-2 py-3 pb-4">
+            <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Oportunidad</span><br>
@@ -113,7 +127,7 @@
                     </div>
                 </div>                
             </div>
-            <div class="w-full flex flex-row space-x-2 py-3 pb-4">
+            <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Etapa</span><br>

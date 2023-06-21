@@ -9,6 +9,8 @@ use App\Models\LineaNegocio;
 use App\Models\Servicio;
 use App\Models\FuenteLead;
 use App\Models\Lead;
+use App\Models\Compania;
+use Illuminate\Support\Facades\Auth;
 
 class NuevoLead extends Component
 {
@@ -25,6 +27,9 @@ class NuevoLead extends Component
 
     public $linea_negocio;
     public $lineas_negocio=[];
+
+    public $compañia;
+    public $compañias=[];
 
     public $servicio;
     public $servicios=[];
@@ -61,6 +66,7 @@ class NuevoLead extends Component
     public function mount()
     {
         $this->opcion_empresa=Prospecto::orderBy('razon_social','ASC')->get();
+        $this->compañias=Compania::orderBy('nombre','ASC')->get();
         $this->opcion_contacto=[];
         $this->ver_contacto=0;
         $this->lineas_negocio=LineaNegocio::all();
@@ -100,6 +106,7 @@ class NuevoLead extends Component
     public function validacion()
     {
         $reglas = [
+            'compañia'=>'required',
             'empresa'=>'required',
             'contacto'=>'required',
             'linea_negocio'=>'required',
@@ -126,6 +133,8 @@ class NuevoLead extends Component
         $this->procesando=1;
 
         Lead::create([
+            'user_id'=>Auth::user()->id,
+            'compania_id'=>$this->compañia,
             'prospecto_id'=>$this->empresa,
             'contacto_prospecto_id'=>$this->contacto,
             'linea_negocio_id'=>$this->linea_negocio,
