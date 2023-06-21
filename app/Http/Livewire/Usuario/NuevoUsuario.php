@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Usuario;
 
 use Livewire\Component;
-use App\Models\Locacion;
+use App\Models\Compania;
 use App\Models\Puesto;
 
 use App\Models\User;
@@ -17,8 +17,8 @@ class NuevoUsuario extends Component
     public $email;
     public $nombre;
     public $puesto;
-    public $locacion;
-    public $locaciones=[];
+    public $compania;
+    public $companias=[];
     public $puestos=[];
 
     public function render()
@@ -28,7 +28,7 @@ class NuevoUsuario extends Component
 
     public function mount()
     {
-        $this->locaciones=Locacion::where('visible',1)
+        $this->companias=Compania::where('estatus',1)
                         ->orderBy('nombre','asc')
                         ->get();
         $this->puestos=Puesto::where('visible',1)->orderBy('nombre','asc')->get();
@@ -45,7 +45,7 @@ class NuevoUsuario extends Component
         $this->usuario='';
         $this->nombre='';
         $this->puesto='';
-        $this->locacion='';
+        $this->compania='';
         $this->resetErrorBag();
         $this->resetValidation();
     }
@@ -56,7 +56,7 @@ class NuevoUsuario extends Component
             'email'=>'required|email|unique:users,email',
             'nombre' => 'required',
             'puesto' => 'required',
-            'locacion'=>'required',
+            'compania'=>'required',
           ];
         //dd($reglas);
         $this->validate($reglas,
@@ -77,7 +77,7 @@ class NuevoUsuario extends Component
             'usuario'=>$this->usuario,
             'name'=>$this->nombre,
             'puesto'=> $this->puesto,
-            'locacion'=> $this->locacion,
+            'compania'=> $this->compania,
             'email'=>$this->email,
             'password'=>'$2y$10$l3Ie3V7nvjxar33TlexunOeoP.0t9EnvwvyEDkCk1sIdjKjoO1oRK',
         ]);
@@ -90,7 +90,7 @@ class NuevoUsuario extends Component
         $this->usuario='';
         $this->nombre='';
         $this->puesto='';
-        $this->locacion='';
+        $this->compania='';
         $this->resetErrorBag();
         $this->resetValidation();
     }

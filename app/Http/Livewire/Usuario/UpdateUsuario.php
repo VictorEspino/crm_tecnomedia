@@ -4,7 +4,7 @@ namespace App\Http\Livewire\Usuario;
 
 use Livewire\Component;
 use App\Models\User;
-use App\Models\Locacion;
+use App\Models\Compania;
 use App\Models\Puesto;
 
 class UpdateUsuario extends Component
@@ -21,10 +21,10 @@ class UpdateUsuario extends Component
     public $email;
     public $nombre;
     public $puesto;
-    public $locacion;
+    public $compania;
     public $estatus;
 
-    public $locaciones=[];
+    public $companias=[];
     public $puestos=[];
 
     public function render()
@@ -40,7 +40,7 @@ class UpdateUsuario extends Component
         $this->open=true;
         $this->procesando=0;
         $user=User::find($this->id_user);
-        $this->locaciones=Locacion::where('visible',1)
+        $this->companias=Compania::where('estatus',1)
                         ->orderBy('nombre','asc')
                         ->get();
         $this->puestos=Puesto::where('visible',1)->orderBy('nombre','asc')
@@ -50,7 +50,7 @@ class UpdateUsuario extends Component
         $this->email_inicial=$user->email;
         $this->email=$user->email;
         $this->puesto=$user->puesto;
-        $this->locacion=$user->locacion;
+        $this->compania=$user->compania;
         $this->estatus=$user->estatus;
     }
 
@@ -70,7 +70,7 @@ class UpdateUsuario extends Component
                         'email'=>$this->email,
                         'name'=>$this->nombre,
                         'puesto'=>$this->puesto,
-                        'locacion'=>$this->locacion,
+                        'compania'=>$this->compania,
             ]);
         $this->open=false;
         $this->emit('usuarioModificado');
@@ -82,7 +82,7 @@ class UpdateUsuario extends Component
             'email'=>'required|email',
             'nombre' => 'required',
             'puesto' => 'required',
-            'locacion'=>'required',
+            'compania'=>'required',
           ];
         if($this->email_inicial!=$this->email)
         {

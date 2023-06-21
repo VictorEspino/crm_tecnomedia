@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Locacion extends Model
+class FuenteLead extends Model
 {
     use HasFactory;
 }

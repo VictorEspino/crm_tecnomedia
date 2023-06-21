@@ -26,7 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'usuario',
         'puesto',
-        'locacion',
+        'compania',
         'name',
         'email',
         'password',
@@ -62,8 +62,8 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    public function locacion_desc()
+    public function compania_desc()
     {
-        return $this->belongsTo(Locacion::class,'locacion');
+        return $this->belongsTo(Compania::class,'compania');
     }
 }

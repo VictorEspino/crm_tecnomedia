@@ -75,6 +75,10 @@
 
 </style>
 
+       <link href="/js/calendario/main.css" rel='stylesheet' />
+        <script src="/js/calendario/main.js"></script>
+        <script src="/js/calendario/es.js"></script>
+
     </head>
     <body class="font-sans antialiased">
         <x-jet-banner />
@@ -105,7 +109,63 @@
                                     </a>
                                 </div>         
                              </div>
-                        
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
+                                Leads
+                            </div>
+                            <div class="flex flex-col">
+
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('nuevo_lead')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Registro de Leads
+                                    </a>
+                                </div>     
+                                <div class="pl-5 pt-2 text-yellow-300">
+                                    <a href="{{route('nuevo_lead')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Historial de Leads
+                                    </a>
+                                </div>     
+                             </div>
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
+                                Oportunidades
+                            </div>
+                            <div class="flex flex-col">
+
+                                <div class="pl-5 pt-2 text-blue-300">
+                                    <a href="{{route('nuevo_lead')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Nueva Oportunidad
+                                    </a>
+                                </div>     
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('nuevo_lead')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Seguimiento de oportunidades
+                                    </a>
+                                </div>     
+                             </div>
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
+                                Actividades pendientes
+                            </div>
+                            <div class="flex flex-col">
+
+                                <div class="pl-5 pt-2 text-yellow-300">
+                                    <a href="{{route('actividades')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Calendario
+                                    </a>
+                                </div>     
+                                <div class="pl-5 pt-2 text-blue-300">
+                                    <a href="{{route('nuevo_lead')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Listado
+                                    </a>
+                                </div>     
+                             </div>
                             <div class="px-3 text-[#383c3f] flex flex-col">.
                             </div>
                             <div class="px-3 text-[#383c3f] flex flex-col">.

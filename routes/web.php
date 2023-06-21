@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Usuario\ShowUsuarios;
+use App\Http\Livewire\Lead\NuevoLead;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::middleware([
 });
 
 Route::get('/usuarios',ShowUsuarios::class)->name('usuarios')->middleware('auth');
+Route::get('/nuevo_lead',NuevoLead::class)->name('nuevo_lead')->middleware('auth');
+Route::get('/actividades',function (){return view('actividades.calendario_actividades');})->name('actividades')->middleware('auth');

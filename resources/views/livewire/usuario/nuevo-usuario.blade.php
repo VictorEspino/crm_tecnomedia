@@ -36,14 +36,14 @@
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-full">
-                        <x-jet-label value="Locacion" />
-                        <select name="locacion" wire:model="locacion" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                        <x-jet-label value="Compania" />
+                        <select name="compania" wire:model="compania" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                             <option></option>
-                            @foreach($locaciones as $opcion)
+                            @foreach($companias as $opcion)
                                 <option value="{{$opcion->id}}">{{$opcion->nombre}}</option>
                             @endforeach
                         </select>  
-                        @error('locacion') <span class="text-xs text-red-400">{{ $message }}</span> @enderror 
+                        @error('compania') <span class="text-xs text-red-400">{{ $message }}</span> @enderror 
                     </div>
                 </div>
             </div>

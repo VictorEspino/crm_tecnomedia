@@ -16,7 +16,7 @@
         <style>
             .body-bg {
                 background-color: #4A98AC;
-                background-image: linear-gradient(315deg, #02330F 0%,#1A7833 74%);
+                background-image: linear-gradient(315deg, #3385ff 0%,#FFFFFF 74%);
                 /*
                 background-image: linear-gradient(315deg, #25D4B9 0%,#0F84B7  74%);
                 */

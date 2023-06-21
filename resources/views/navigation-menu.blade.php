@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-lime-800 ">
+<nav x-data="{ open: false }" class="bg-gradient-to-r from-white via-white to-blue-500 h-500">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between ">
@@ -10,8 +10,8 @@
                     </a>
                 </div>
             </div>
-            <div class="flex items-center font-bold text-gray-100 text-lg md:text-2xl sm:text-2xl">
-                CRM TELEFONIA
+            <div class="flex items-center font-bold text-blue-500 text-lg md:text-2xl sm:text-2xl">
+                CRM TecnoMedia
             </div>
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 <!-- Teams Dropdown -->
