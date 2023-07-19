@@ -10,6 +10,7 @@ use App\Models\Servicio;
 use App\Models\FuenteLead;
 use App\Models\Lead;
 use App\Models\Compania;
+use App\Models\EtapaLead;
 use Illuminate\Support\Facades\Auth;
 
 class NuevoLead extends Component
@@ -132,6 +133,13 @@ class NuevoLead extends Component
         $this->validacion();
         $this->procesando=1;
 
+        $dias_escalacion=EtapaLead::find(1)->dias;
+
+        $fecha_actual = date("Y-m-d");
+        $fecha_nueva = new \DateTime($fecha_actual);
+        $fecha_nueva->modify("+".$dias_escalacion." days");
+        $fecha_nueva_formateada = $fecha_nueva->format("Y-m-d");
+
         Lead::create([
             'user_id'=>Auth::user()->id,
             'compania_id'=>$this->compañia,
@@ -143,6 +151,7 @@ class NuevoLead extends Component
             'partner'=>$this->partner,
             'producto'=>$this->producto,
             'etapa_id'=>$this->etapa,
+            'due_date_etapa'=>$fecha_nueva_formateada,
             'fuente_id'=>$this->fuente,
             'fecha_contacto'=>$this->fecha_contacto,
             'comentarios'=>$this->comentarios

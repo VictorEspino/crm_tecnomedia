@@ -42,7 +42,7 @@ class LeadsController extends Controller
         }
         if($excel=="NO")
         {
-        $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente')
+        $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa')
                         ->orderBy('fecha_contacto','desc')
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {
@@ -89,7 +89,7 @@ class LeadsController extends Controller
         }    
         else
         {
-            $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente')
+            $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa')
                         ->orderBy('fecha_contacto','desc')
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {

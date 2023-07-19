@@ -100,7 +100,8 @@
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Fuente</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Contacto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Fecha</td>
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"></td>
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2></td>
+                        
                     </tr>
                 <?php
                     $color=false;
@@ -115,11 +116,16 @@
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs font-bold">{{$lead->prospecto->razon_social}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->partner}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->producto}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->etapa_id}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->etapa->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->fuente->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->contacto->nombre}}</td>
                         <td nowrap class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->fecha_contacto}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs"></td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
+                        @livewire('lead.update-lead',['lead_id'=>$lead->id,key($lead->id)])
+                        </td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
+                        @livewire('lead.avanzar-etapa-lead',['lead_id'=>$lead->id,key($lead->id)])
+                        </td>
                     </tr>
                 <?php
                     $color=!$color;

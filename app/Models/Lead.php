@@ -20,6 +20,7 @@ class Lead extends Model
         'partner',
         'producto',
         'etapa_id',
+        'due_date_etapa',
         'fuente_id',
         'fecha_contacto',
         'comentarios',
@@ -48,5 +49,9 @@ class Lead extends Model
     public function compania()
     {
         return $this->belongsTo(Compania::class,'compania_id');
+    }
+    public function etapa()
+    {
+        return $this->belongsTo(EtapaLead::class,'etapa_id');
     }
 }

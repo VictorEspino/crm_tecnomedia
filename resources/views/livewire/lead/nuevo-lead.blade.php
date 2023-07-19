@@ -133,7 +133,7 @@
                         <span class="text-xs text-ttds">Etapa</span><br>
                         <select wire:model="etapa" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                             <option value=""></option>
-                            <option value="1">Nuevo Lead</option>
+                            <option value="1">Contacto</option>
                         </select>
                     </div>
                     <div class="w-1/3">
