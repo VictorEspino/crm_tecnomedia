@@ -7,6 +7,7 @@ header("Expires: 0");
 <table border=1>
 <tr>
     <td bgcolor="#0099ff"><center>Compañia</td>
+    <td bgcolor="#0099ff"><center>Vendedor</td>
     <td bgcolor="#0099ff"><center>Linea de Negocio</td>
     <td bgcolor="#0099ff"><center>Servicio</td>
     <td bgcolor="#0099ff"><center>Oportunidad</td>
@@ -24,6 +25,7 @@ foreach ($registros as $lead) {
 	?>
 <tr>
 <td>{{$lead->compania->nombre}}</td>
+<td>{{$lead->user->name}}</td>
 <td>{{$lead->linea_negocio->nombre}}</td>
 <td>{{$lead->servicio->nombre}}</td>
 <td>{{$lead->oportunidad}}</td>

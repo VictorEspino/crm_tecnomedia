@@ -13,9 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('leads', function (Blueprint $table) {
+        Schema::create('oportunidads', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('lead_id')->nullable;
             $table->foreignId('user_id');
+            $table->foreignId('compania_id');
             $table->foreignId('prospecto_id');
             $table->foreignId('contacto_prospecto_id');
             $table->foreignId('linea_negocio_id');
@@ -24,8 +26,14 @@ return new class extends Migration
             $table->string('partner');
             $table->string('producto');
             $table->foreignId('etapa_id');
-            $table->foreignId('fuente_id');
-            $table->date('fecha_contacto');
+            $table->foreignId('moneda_id');
+            $table->integer('horas_consultoria');
+            $table->integer('valor_propuesta');
+            $table->float('costo_fabricante');
+            $table->float('costo_consultoria');
+            $table->float('margen_estimado');
+            $table->date('estimacion_cierre');
+            $table->integer('dias_credito');
             $table->text('comentarios')->nullable();
             $table->timestamps();
         });
@@ -38,6 +46,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leads');
+        Schema::dropIfExists('oportunidads');
     }
 };

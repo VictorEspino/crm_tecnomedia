@@ -135,13 +135,13 @@
                             <div class="flex flex-col">
 
                                 <div class="pl-5 pt-2 text-blue-300">
-                                    <a href="{{route('nuevo_lead')}}">
+                                    <a href="{{route('nueva_oportunidad')}}">
                                         <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
                                         Nueva Oportunidad
                                     </a>
                                 </div>     
                                 <div class="pl-5 pt-2 text-lime-300">
-                                    <a href="{{route('nuevo_lead')}}">
+                                    <a href="{{route('base_oportunidades')}}">
                                         <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
                                         Seguimiento de oportunidades
                                     </a>

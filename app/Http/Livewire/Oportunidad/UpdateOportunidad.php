@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Livewire\Lead;
+namespace App\Http\Livewire\Oportunidad;
 
 use Livewire\Component;
-use App\Models\Lead;
-use App\Models\BitacoraLead;
-use App\Models\TipoBitacoraLead;
+use App\Models\Oportunidad;
+use App\Models\BitacoraOportunidad;
+use App\Models\TipoBitacoraOportunidad;
 use Illuminate\Support\Facades\Auth;
 
-class UpdateLead extends Component
+class UpdateOportunidad extends Component
 {
     public $open=false;
-    public $lead_id;
+    public $oportunidad_id;
     public $procesando=0;
 
-    public $lead;
+    public $oportunidad;
+
+    public $oportunidad_text;
 
     public $razon_social;
     public $contacto;
@@ -23,10 +25,10 @@ class UpdateLead extends Component
     public $linea_negocio;
     public $servicio;
     public $producto;
-    public $oportunidad;
+
     public $partner;
 
-    public $bitacora_leads=[];
+    public $bitacora_oportunidads=[];
 
     public $nuevas_bitacoras=[];
 
@@ -34,37 +36,37 @@ class UpdateLead extends Component
 
     public function render()
     {
-        return view('livewire.lead.update-lead');
+        return view('livewire.oportunidad.update-oportunidad');
     }
-    public function mount($lead_id)
+    public function mount($oportunidad_id)
     {
-        $this->lead_id=$lead_id;
+        $this->oportunidad_id=$oportunidad_id;
     }
     public function edit_open()
     {
         $this->open=true;
-        $this->lead=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente')
-                                    ->where('id',$this->lead_id)
+        $this->oportunidad=Oportunidad::with('prospecto','contacto','linea_negocio','servicio')
+                                    ->where('id',$this->oportunidad_id)
                                     ->get()
                                     ->first();
-        $this->razon_social=$this->lead->prospecto->razon_social;
-        $this->contacto=$this->lead->contacto->nombre;
-        $this->telefono=$this->lead->contacto->telefono1;
-        $this->correo=$this->lead->contacto->correo1;
-        $this->linea_negocio=$this->lead->linea_negocio->nombre;
-        $this->servicio=$this->lead->servicio->nombre;
-        $this->producto=$this->lead->producto;
-        $this->oportunidad=$this->lead->oportunidad;
-        $this->partner=$this->lead->partner;
+        $this->razon_social=$this->oportunidad->prospecto->razon_social;
+        $this->contacto=$this->oportunidad->contacto->nombre;
+        $this->telefono=$this->oportunidad->contacto->telefono1;
+        $this->correo=$this->oportunidad->contacto->correo1;
+        $this->linea_negocio=$this->oportunidad->linea_negocio->nombre;
+        $this->servicio=$this->oportunidad->servicio->nombre;
+        $this->producto=$this->oportunidad->producto;
+        $this->oportunidad_text=$this->oportunidad->oportunidad;
+        $this->partner=$this->oportunidad->partner;
 
-        $this->bitacora_leads=BitacoraLead::with('tipo')
-                                            ->where('lead_id',$this->lead_id)
+        $this->bitacora_oportunidads=BitacoraOportunidad::with('tipo')
+                                            ->where('oportunidad_id',$this->oportunidad_id)
                                             ->orderBy('id','desc')
                                             ->get();
 
-        $this->tipos=TipoBitacoraLead::where('visible',1)->orderBy('id','asc')->get();
+        $this->tipos=TipoBitacoraOportunidad::where('visible',1)->orderBy('id','asc')->get();
         
-        if(is_null($this->bitacora_leads)) $this->bitacora_leads=[];
+        if(is_null($this->bitacora_oportunidads)) $this->bitacora_oportunidads=[];
     }
 
     public function agregar_bitacora()
@@ -84,7 +86,7 @@ class UpdateLead extends Component
     }
     public function validacion()
     {
-        $reglas = ['lead_id'=>'required'];
+        $reglas = ['oportunidad_id'=>'required'];
         foreach ($this->nuevas_bitacoras as $index => $campos) 
           {
             $reglas = array_merge($reglas, [
@@ -109,9 +111,9 @@ class UpdateLead extends Component
         $this->procesando=1;
         foreach($this->nuevas_bitacoras as $nueva)
         {
-            BitacoraLead::create([
+            BitacoraOportunidad::create([
             'user_id'=>Auth::user()->id,
-            'lead_id'=>$this->lead_id,
+            'oportunidad_id'=>$this->oportunidad_id,
             'tipo_id'=>$nueva['tipo'],
             'detalles'=>$nueva['detalles'],
             'gasto'=>$nueva['gasto'],
@@ -119,16 +121,16 @@ class UpdateLead extends Component
             'due_date'=>$nueva['due_date'],
             ]);
         }
-        $this->emit('alert_ok','El lead se actualizo satisfactoriamente');
+        $this->emit('alert_ok','El oportunidad se actualizo satisfactoriamente');
         $this->resetErrorBag();
         $this->resetValidation();
-        $this->resetExcept('lead_id');
+        $this->resetExcept('oportunidad_id');
     }
     public function cancelar()
     {
         $this->open=false;
         $this->resetErrorBag();
         $this->resetValidation();
-        $this->resetExcept('lead_id');
+        $this->resetExcept('oportunidad_id');
     }
 }

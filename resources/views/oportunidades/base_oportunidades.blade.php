@@ -1,17 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-            {{ __('Base de Leads') }}
+            {{ __('Base de Oportunidades') }}
     </x-slot>
 
     <div class="flex flex-col w-full text-gray-700 px-2 md:px-8">
         <div class="w-full rounded-t-lg bg-slate-300 p-3 flex flex-col border-b border-gray-800"> <!--ENCABEZADO-->
-            <div class="w-full text-lg font-semibold">Base leads</div>
+            <div class="w-full text-lg font-semibold">Base oportunidades</div>
             <div class="w-full text-sm">({{Auth::user()->usuario}}) - {{Auth::user()->name}}</div>            
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
         
         <div class="w-full rounded-b-lg bg-white p-3 flex flex-col"> <!--CONTENIDO-->
-            <form class="w-full" action="{{route('base_leads')}}" class="">
+            <form class="w-full" action="{{route('base_oportunidades')}}" class="">
             <input type="hidden" name="filtro" value="ACTIVE"> 
             <div class="w-full flex flex-row space-x-2 bg-slate-400 py-3 px-3">
                     <div class="w-1/6">
@@ -98,7 +98,6 @@
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Partner/Fabricante</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Producto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Etapa</td>
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Fuente</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Contacto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Fecha</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2></td>
@@ -106,27 +105,26 @@
                     </tr>
                 <?php
                     $color=false;
-                    foreach($registros as $lead)
+                    foreach($registros as $oportunidad)
                     {
                 ?>
                     <tr class="">
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->compania->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->user->name}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->linea_negocio->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->servicio->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->oportunidad}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs font-bold">{{$lead->prospecto->razon_social}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->partner}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->producto}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->etapa->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->fuente->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->contacto->nombre}}</td>
-                        <td nowrap class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->fecha_contacto}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->compania->nombre}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->user->name}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->linea_negocio->nombre}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->servicio->nombre}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->oportunidad}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs font-bold">{{$oportunidad->prospecto->razon_social}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->partner}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->producto}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->etapa->nombre}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->contacto->nombre}}</td>
+                        <td nowrap class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->created_at}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
-                        @livewire('lead.update-lead',['lead_id'=>$lead->id,key($lead->id)])
+                        @livewire('oportunidad.update-oportunidad',['oportunidad_id'=>$oportunidad->id,key($oportunidad->id)])
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
-                        @livewire('lead.avanzar-etapa-lead',['lead_id'=>$lead->id,key($lead->id)])
+                        @livewire('oportunidad.avanzar-etapa-oportunidad',['oportunidad_id'=>$oportunidad->id,key($oportunidad->id)])
                         </td>
                     </tr>
                 <?php

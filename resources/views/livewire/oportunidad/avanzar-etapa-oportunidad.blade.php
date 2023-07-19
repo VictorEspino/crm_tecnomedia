@@ -40,7 +40,7 @@
                         <x-jet-label class="text-base" value="Producto : {{$producto}}" />
                     </div>
                     <div class="w-1/2 px-5">
-                        <x-jet-label class="text-xl font-bold" value="{{$oportunidad}}" />
+                        <x-jet-label class="text-xl font-bold" value="{{$oportunidad_text}}" />
                     </div>                    
                 </div>
                 <div class="w-full flex flex-col">

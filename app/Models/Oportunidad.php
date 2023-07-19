@@ -5,25 +5,32 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Lead extends Model
+class Oportunidad extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'compania_id',
-        'prospecto_id',
-        'contacto_prospecto_id',
-        'linea_negocio_id',
-        'servicio_id',
-        'oportunidad',
-        'partner',
-        'producto',
-        'etapa_id',
-        'due_date_etapa',
-        'fuente_id',
-        'fecha_contacto',
-        'comentarios',
+    protected $fillable=[
+            'lead_id',
+            'user_id',
+            'prospecto_id',
+            'contacto_prospecto_id',
+            'linea_negocio_id',
+            'servicio_id',
+            'oportunidad',
+            'partner',
+            'producto',
+            'etapa_id',
+            'moneda_id',
+            'horas_consultoria',
+            'valor_propuesta',
+            'costo_fabricante',
+            'costo_consultoria',
+            'margen_estimado',
+            'estimacion_cierre',
+            'dias_credito',
+            'comentarios',
+            'compania_id',
+            'due_date_etapa'
     ];
 
     public function prospecto()
@@ -42,17 +49,17 @@ class Lead extends Model
     {
         return $this->belongsTo(Servicio::class,'servicio_id');
     }
-    public function fuente()
-    {
-        return $this->belongsTo(FuenteLead::class,'fuente_id');
-    }
     public function compania()
     {
         return $this->belongsTo(Compania::class,'compania_id');
     }
     public function etapa()
     {
-        return $this->belongsTo(EtapaLead::class,'etapa_id');
+        return $this->belongsTo(EtapaOportunidad::class,'etapa_id');
+    }
+    public function moneda()
+    {
+        return $this->belongsTo(Moneda::class,'moneda_id');
     }
     public function user()
     {

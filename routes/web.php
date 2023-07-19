@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Usuario\ShowUsuarios;
 use App\Http\Livewire\Lead\NuevoLead;
+use App\Http\Livewire\Oportunidad\NuevaOportunidad;
 
 use App\Http\Controllers\LeadsController;
+use App\Http\Controllers\OportunidadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,3 +39,6 @@ Route::get('/actividades',function (){return view('actividades.calendario_activi
 
 Route::get('/nuevo_lead',NuevoLead::class)->name('nuevo_lead')->middleware('auth');
 Route::get('/base_leads',[LeadsController::class,'base_leads'])->middleware('auth')->name('base_leads');
+
+Route::get('/nueva_oportunidad',NuevaOportunidad::class)->name('nueva_oportunidad')->middleware('auth');
+Route::get('/base_oportunidades',[OportunidadController::class,'base_oportunidades'])->middleware('auth')->name('base_oportunidades');

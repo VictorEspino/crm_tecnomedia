@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BitacoraLead extends Model
+class BitacoraOportunidad extends Model
 {
     use HasFactory;
 
     protected $fillable=[
-        'lead_id',
+        'oportunidad_id',
         'user_id',
         'tipo_id',
         'detalles',
@@ -21,10 +21,10 @@ class BitacoraLead extends Model
 
     public function tipo()
     {
-        return $this->belongsTo(TipoBitacoraLead::class,'tipo_id');
+        return $this->belongsTo(TipoBitacoraOportunidad::class,'tipo_id');
     }
     public function lead()
     {
-        return $this->belongsTo(Lead::class,'lead_id');
+        return $this->belongsTo(Oportunidad::class,'oportunidad_id');
     }
 }

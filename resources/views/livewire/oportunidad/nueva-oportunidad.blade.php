@@ -1,18 +1,18 @@
 <div>
     <x-slot name="header">
-        {{ __('Nuevo Lead') }}
+        {{ __('Nueva Oportunidad') }}
     </x-slot>
     <div class="w-full flex flex-col px-5">
         <div class="w-full">
             <x-jet-section-title>
-                <x-slot name="title">Nuevo Lead</x-slot>
-                <x-slot name="description">Permite generar todos los datos necesarios para el registro de un nuevo LEAD</x-slot>
+                <x-slot name="title">Nueva Oportunidad</x-slot>
+                <x-slot name="description">Permite generar todos los datos necesarios para el registro de una nueva OPORTUNIDAD</x-slot>
             </x-jet-section-title>
         </div>
     </div>
     <div class="p-10 flex flex-col w-full text-gray-700  px-2 md:px-8">
         <div class="w-full rounded-t-lg bg-slate-300 p-3 flex flex-col border-b border-gray-800"> <!--ENCABEZADO-->
-            <div class="w-full text-lg font-semibold">Generar nuevo lead</div>
+            <div class="w-full text-lg font-semibold">Generar nueva oportunidad</div>
             <div class="w-full text-sm">({{Auth::user()->usuario}}) - {{Auth::user()->name}}</div>            
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
@@ -62,7 +62,7 @@
             </div>
             @endif
             <div class="border-t py-2 border-b">
-                <span class="text-red-700 font-bold">Datos del Lead</span>
+                <span class="text-red-700 font-bold">Datos Oportunidad</span>
             </div>
             <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
@@ -81,9 +81,14 @@
             <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
-                        <x-jet-label value="Fecha contacto" />                    
-                        <input  type="date" class="w-full rounded p-1 border border-gray-300 bg-white" wire:model="fecha_contacto"> 
-                        @error('fecha_contacto') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                        <x-jet-label value="Moneda" />                    
+                        <select name="moneda" wire:model.defer="moneda" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
+                            <option></option>
+                        @foreach ($monedas as $comp)
+                            <option value="{{$comp->id}}">{{$comp->nombre}}</option>    
+                        @endforeach
+                        </select> 
+                        @error('compañia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror                        
                     </div>
                     <div class="w-1/3">
                         <x-jet-label value="Linea de negocio" />                    
@@ -142,21 +147,54 @@
             <div class="w-full flex flex-row space-x-2 py-3">
                 <div class="w-full flex flex-row space-x-3">
                     <div class="w-1/3">
+                        <span class="text-xs text-ttds">Horas consultoria</span><br>
+                        <input wire:model="horas_consultoria" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('horas_consultoria') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Valor propuesta</span><br>
+                        <input wire:model="valor_propuesta" class="w-full rounded p-1 border border-gray-300 bg-white">                        
+                        @error('valor_propuesta') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Costo Fabricante</span><br>
+                        <input wire:model="costo_fabricante" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('costo_fabricante') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                </div>                
+            </div>
+            <div class="w-full flex flex-row space-x-2 py-3">
+                <div class="w-full flex flex-row space-x-3">
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Costo consultoria</span><br>
+                        <input wire:model="costo_consultoria" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('costo_consultoria') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Margen Estimado</span><br>
+                        <input wire:model="margen_estimado" class="w-full rounded p-1 border border-gray-300 bg-white">                        
+                        @error('margen_estimado') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Estimacion cierre</span><br>
+                        <input type="date" wire:model="estimacion_cierre" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('estimacion_cierre') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                </div>                
+            </div>
+            <div class="w-full flex flex-row space-x-2 py-3">
+                <div class="w-full flex flex-row space-x-3">
+                    <div class="w-1/3">
+                        <span class="text-xs text-ttds">Dias credito</span><br>
+                        <input wire:model="dias_credito" class="w-full rounded p-1 border border-gray-300 bg-white"> 
+                        @error('dias_credito') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    </div>
+                    <div class="w-1/3">
                         <span class="text-xs text-ttds">Etapa</span><br>
                         <select wire:model="etapa" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                             <option value=""></option>
-                            <option value="1">Contacto</option>
+                            <option value="1">Evaluacion necesidad / Diseño - Arq de Solucion</option>
                         </select>
-                    </div>
-                    <div class="w-1/3">
-                        <x-jet-label value="Origen de Lead" />                    
-                        <select name="fuente" wire:model.defer="fuente" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
-                            <option></option>
-                        @foreach ($fuentes as $fue)
-                            <option value="{{$fue->id}}">{{$fue->nombre}}</option>    
-                        @endforeach
-                        </select> 
-                        @error('fuente') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Comentarios</span><br>

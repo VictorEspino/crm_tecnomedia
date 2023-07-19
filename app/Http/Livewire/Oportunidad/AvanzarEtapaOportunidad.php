@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Http\Livewire\Lead;
+namespace App\Http\Livewire\Oportunidad;
 
 use Livewire\Component;
-use App\Models\Lead;
-use App\Models\EtapaLead;
-use App\Models\BitacoraLead;
+
+use App\Models\Oportunidad;
+use App\Models\EtapaOportunidad;
+use App\Models\BitacoraOportunidad;
 use Illuminate\Support\Facades\Auth;
 
-class AvanzarEtapaLead extends Component
+class AvanzarEtapaOportunidad extends Component
 {
-
     public $open=false;
-    public $lead_id;
+    public $oportunidad_id;
     public $procesando=0;
 
-    public $lead;
+    public $oportunidad;
 
     public $razon_social;
     public $contacto;
@@ -24,7 +24,7 @@ class AvanzarEtapaLead extends Component
     public $linea_negocio;
     public $servicio;
     public $producto;
-    public $oportunidad;
+    public $oportunidad_text;
     public $partner;
 
     public $etapa_actual;
@@ -41,39 +41,39 @@ class AvanzarEtapaLead extends Component
 
     public function render()
     {
-        return view('livewire.lead.avanzar-etapa-lead');
+        return view('livewire.oportunidad.avanzar-etapa-oportunidad');
     }
 
-    public function mount($lead_id)
+    public function mount($oportunidad_id)
     {
-        $this->lead_id=$lead_id;
-        $this->desc_etapa_actual=EtapaLead::find(1);
+        $this->oportunidad_id=$oportunidad_id;
+        $this->desc_etapa_actual=EtapaOportunidad::find(1);
     }
     public function edit_open()
     {
         $this->open=true;
-        $this->lead=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente')
-                                    ->where('id',$this->lead_id)
+        $this->oportunidad=Oportunidad::with('prospecto','contacto','linea_negocio','servicio')
+                                    ->where('id',$this->oportunidad_id)
                                     ->get()
                                     ->first();
-        $this->razon_social=$this->lead->prospecto->razon_social;
-        $this->contacto=$this->lead->contacto->nombre;
-        $this->telefono=$this->lead->contacto->telefono1;
-        $this->correo=$this->lead->contacto->correo1;
-        $this->linea_negocio=$this->lead->linea_negocio->nombre;
-        $this->servicio=$this->lead->servicio->nombre;
-        $this->producto=$this->lead->producto;
-        $this->oportunidad=$this->lead->oportunidad;
-        $this->partner=$this->lead->partner;
-        $this->etapa_actual=$this->lead->etapa_id;
+        $this->razon_social=$this->oportunidad->prospecto->razon_social;
+        $this->contacto=$this->oportunidad->contacto->nombre;
+        $this->telefono=$this->oportunidad->contacto->telefono1;
+        $this->correo=$this->oportunidad->contacto->correo1;
+        $this->linea_negocio=$this->oportunidad->linea_negocio->nombre;
+        $this->servicio=$this->oportunidad->servicio->nombre;
+        $this->producto=$this->oportunidad->producto;
+        $this->oportunidad_text=$this->oportunidad->oportunidad;
+        $this->partner=$this->oportunidad->partner;
+        $this->etapa_actual=$this->oportunidad->etapa_id;
 
-        $this->desc_etapa_actual=EtapaLead::find($this->etapa_actual);
+        $this->desc_etapa_actual=Etapaoportunidad::find($this->etapa_actual);
         
         $this->opciones_avance=[];
 
-        if($this->etapa_actual<=4)
+        if($this->etapa_actual<=7)
         {
-            $siguiente=EtapaLead::find($this->etapa_actual+1);
+            $siguiente=Etapaoportunidad::find($this->etapa_actual+1);
             $this->opciones_avance[]=[
                                         'id'=>$this->etapa_actual+1,
                                         'nombre'=>$siguiente->nombre,
@@ -82,12 +82,18 @@ class AvanzarEtapaLead extends Component
                                     ];
         }
 
-        if($this->etapa_actual!=5)
+        if($this->etapa_actual!=7)
         {
             $this->opciones_avance[]=[
-                'id'=>6,
-                'nombre'=>'Cierre',
-                'mensaje'=>'Esta estatus indica que el prospecto no califica para ser cliente de TecnoMedia con esta ruta de contacto.',
+                'id'=>8,
+                'nombre'=>'Cerrado ganado',
+                'mensaje'=>'Esta estatus indica que el prospecto CALIFICA para ser cliente de TecnoMedia con esta ruta de contacto, se procede al seguimiento en el modulo de proyectos para su implementacion.',
+                'dias'=>0,
+            ];
+            $this->opciones_avance[]=[
+                'id'=>9,
+                'nombre'=>'Cerrado perdido',
+                'mensaje'=>'Esta estatus indica que el prospecto no acepta la propuesta de solucion de Tecnomedia y sus parametros financieros',
                 'dias'=>0,
             ];
         }
@@ -105,10 +111,12 @@ class AvanzarEtapaLead extends Component
                 $this->mensaje_avance=$opcion['mensaje'];
                 $this->dias_avance=$opcion['dias'];
                 $this->avance_nombre=$opcion['nombre'];
-                if($this->avanzar_a!=6 && $this->avanzar_a!='')
+                if($this->avanzar_a!=8 && $this->avanzar_a!=9 && $this->avanzar_a!='')
                     $this->dias_dd="A partir de esta fecha tendras ".$this->dias_avance." dias para concluir esta accion.";
-                if($this->avanzar_a==6)
-                    $this->dias_dd="Esto eliminara el LEAD de la tabla de seguimiento y lo dara por cerrado";
+                    if($this->avanzar_a==8)
+                    $this->dias_dd="Esto dara la oportunidad por GANADA y se comenzara el seguimiento en el modulo de proyectos";
+                if($this->avanzar_a==9)
+                    $this->dias_dd="Esto eliminara el oportunidad de la tabla de seguimiento y lo dara por cerrado";
             }
         }
     }
@@ -137,9 +145,9 @@ class AvanzarEtapaLead extends Component
         $fecha_nueva->modify("+".$this->dias_avance." days");
         $fecha_nueva_formateada = $fecha_nueva->format("Y-m-d");
 
-        BitacoraLead::create([
+        BitacoraOportunidad::create([
             'user_id'=>Auth::user()->id,
-            'lead_id'=>$this->lead_id,
+            'oportunidad_id'=>$this->oportunidad_id,
             'tipo_id'=>4,
             'detalles'=>'Avanza a etapa: '.$this->avance_nombre,
             'gasto'=>0,
@@ -147,22 +155,22 @@ class AvanzarEtapaLead extends Component
             'due_date'=>$fecha_nueva_formateada,
             ]);
 
-        Lead::where('id',$this->lead_id)
+        Oportunidad::where('id',$this->oportunidad_id)
             ->update([
                 'etapa_id'=>$this->avanzar_a,
                 'due_date_etapa'=>$fecha_nueva_formateada
             ]);
  
-        $this->emit('alert_ok','La etapa del lead se actualizo satisfactoriamente');
+        $this->emit('alert_ok','La etapa del oportunidad se actualizo satisfactoriamente');
         $this->resetErrorBag();
         $this->resetValidation();
-        $this->resetExcept('lead_id','desc_etapa_actual');
+        $this->resetExcept('oportunidad_id','desc_etapa_actual');
     }
     public function cancelar()
     {
         $this->open=false;
         $this->resetErrorBag();
         $this->resetValidation();
-        $this->resetExcept('lead_id','desc_etapa_actual');
+        $this->resetExcept('oportunidad_id','desc_etapa_actual');
     }
 }
