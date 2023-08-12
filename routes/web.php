@@ -7,6 +7,7 @@ use App\Http\Livewire\Oportunidad\NuevaOportunidad;
 
 use App\Http\Controllers\LeadsController;
 use App\Http\Controllers\OportunidadController;
+use App\Http\Controllers\CotizacionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +43,5 @@ Route::get('/base_leads',[LeadsController::class,'base_leads'])->middleware('aut
 
 Route::get('/nueva_oportunidad',NuevaOportunidad::class)->name('nueva_oportunidad')->middleware('auth');
 Route::get('/base_oportunidades',[OportunidadController::class,'base_oportunidades'])->middleware('auth')->name('base_oportunidades');
+
+Route::get('/cotizaciones/{id_oportunidad}',[CotizacionController::class,'cotizaciones'])->middleware('auth')->name('cotizaciones');

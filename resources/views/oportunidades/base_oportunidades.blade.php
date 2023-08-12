@@ -100,7 +100,7 @@
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Etapa</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Contacto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Fecha</td>
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2></td>
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=3></td>
                         
                     </tr>
                 <?php
@@ -126,6 +126,14 @@
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
                         @livewire('oportunidad.avanzar-etapa-oportunidad',['oportunidad_id'=>$oportunidad->id,key($oportunidad->id)])
                         </td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
+                            @if($oportunidad->etapa_id=="4") 
+                            <a href="{{route('cotizaciones',['id_oportunidad'=>$oportunidad->id])}}">
+                                <i class="fas fa-dollar-sign text-xl text-red-400"></i>
+                            </a>
+                            @endif
+                        </td>
+
                     </tr>
                 <?php
                     $color=!$color;
