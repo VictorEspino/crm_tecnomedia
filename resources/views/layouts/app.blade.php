@@ -243,5 +243,11 @@ function closeNav() {
                 document.getElementById(forma).submit();
             });
         </script>  
+        <script>
+            Livewire.on('actualiza_fuente',function()
+            {
+                location.reload();
+            });
+        </script>  
     </body>
 </html>

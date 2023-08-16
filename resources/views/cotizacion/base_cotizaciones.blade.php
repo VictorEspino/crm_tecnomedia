@@ -10,12 +10,20 @@
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
         
-        <div class="w-full rounded-b-lg bg-white p-3 flex flex-col"> <!--CONTENIDO-->
+        <div class="w-full rounded-b-lg bg-white p-3 flex flex-col"> <!--CONTENIDO-->            
+            <div class="flex flex-col text-base text-gray-700 pt-2 px-6">
+                <div class="font-bold text-xl">Oportunidad {{$oportunidad->id}}</div>
+                <div class="">{{$oportunidad->prospecto->razon_social}}</div>
+                <div class="text-sm">{{$oportunidad->prospecto->pais}}</div>
+                <div class="text-sm">{{$oportunidad->linea_negocio->nombre}} - {{$oportunidad->servicio->nombre}}</div>
+                <div class="text-sm">Moneda : {{$oportunidad->moneda->nombre}}</div>
+                <div class="text-sm">@livewire('cotizacion.nueva-cotizacion', ['oportunidad_id' => $oportunidad->id,'compania_id' => $oportunidad->compania_id,'moneda_id' => $oportunidad->moneda_id])</div>
+            </div>
             <div class="flex justify-end text-xs pt-2">
-                
+                {{$registros->links()}}
             </div>
             <div class="w-full flex justify-center pt-5 flex-col"> <!--TABLA DE CONTENIDO-->
-                <div class="w-full flex justify-center pb-3"><span class="font-semibold text-sm text-gray-700">Registros de Ventas</span></div>
+                <div class="w-full flex justify-center pb-3"><span class="font-semibold text-sm text-gray-700">Registros de Cotizaciones</span></div>
                 <div class="w-full flex justify-center">
                 <table>
                     <tr class="">
@@ -34,7 +42,7 @@
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$cotizacion->fecha_presentacion}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$cotizacion->descripcion}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">${{number_format($cotizacion->total_propuesta,2)}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs"> @livewire('cotizacion.detalles-cotizacion', ['id_oportunidad' => $id_oportunidad], key($cotizacion->id))</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">@livewire('cotizacion.update-cotizacion', ['cotizacion_id' => $cotizacion->id])</td>
                     </tr>
                 <?php
                     $color=!$color;
