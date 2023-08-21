@@ -166,6 +166,36 @@
                                     </a>
                                 </div>     
                              </div>
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
+                                Tickets
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="pl-5 pt-2 text-yellow-300">
+                                    <a href="{{ route('listas') }}">
+                                        <span class="text-gray-200"><i class="fas fa-list"></i></span>
+                                        Listas
+                                    </a>
+                                </div> 
+                                <div class="pl-5 pt-2 text-blue-300">
+                                    <a href="{{ route('grupos') }}">
+                                        <span class="text-gray-200"><i class="fas fa-users-cog"></i></span>
+                                        Grupos
+                                    </a>
+                                </div>     
+                                <div class="pl-5 pt-2 text-green-300">
+                                    <a href="{{ route('topicos') }}">
+                                        <span class="text-gray-200"><i class="fas fa-book"></i></span>
+                                        Topicos
+                                    </a>
+                                </div>
+                                <div class="pl-5 pt-2 text-yellow-300">
+                                    <a href="{{ route('tickets') }}">
+                                        <span class="text-gray-200"><i class="fas fa-file-invoice"></i></span>
+                                        Tickets
+                                    </a>
+                                </div>     
+                            </div>
                             <div class="px-3 text-[#383c3f] flex flex-col">.
                             </div>
                             <div class="px-3 text-[#383c3f] flex flex-col">.

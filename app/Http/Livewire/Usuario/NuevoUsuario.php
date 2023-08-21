@@ -5,7 +5,8 @@ namespace App\Http\Livewire\Usuario;
 use Livewire\Component;
 use App\Models\Compania;
 use App\Models\Puesto;
-
+use App\Models\Area;
+use App\Models\SubArea;
 use App\Models\User;
 
 class NuevoUsuario extends Component
@@ -13,13 +14,19 @@ class NuevoUsuario extends Component
     public $open=false;
     public $procesando;
 
-    public $usuario;
+    public $user;
     public $email;
     public $nombre;
     public $puesto;
     public $compania;
     public $companias=[];
     public $puestos=[];
+
+    public $area;
+    public $areas=[];
+    public $sub_area;
+    public $sub_areas=[];
+
 
     public function render()
     {
@@ -31,7 +38,18 @@ class NuevoUsuario extends Component
         $this->companias=Compania::where('estatus',1)
                         ->orderBy('nombre','asc')
                         ->get();
-        $this->puestos=Puesto::where('visible',1)->orderBy('nombre','asc')->get();
+        $this->areas=Area::where('estatus',1)
+                        ->orderBy('nombre','asc')
+                        ->get();
+        $this->puestos=Puesto::where('estatus',1)->orderBy('puesto','asc')->get();
+    }
+
+    public function updatedArea()
+    {
+        $this->sub_areas=SubArea::where('area_id',$this->area)
+                                ->where('estatus',1)
+                                ->orderBy('nombre','asc')
+                                ->get();
     }
     public function nuevo()
     {
@@ -42,7 +60,7 @@ class NuevoUsuario extends Component
     {
         $this->open=false;
         $this->email='';
-        $this->usuario='';
+        $this->user='';
         $this->nombre='';
         $this->puesto='';
         $this->compania='';
@@ -52,11 +70,13 @@ class NuevoUsuario extends Component
     public function validacion()
     {
         $reglas = [
-            'usuario'=>'required|unique:users,usuario',
+            'user'=>'required|unique:users,user',
             'email'=>'required|email|unique:users,email',
             'nombre' => 'required',
             'puesto' => 'required',
             'compania'=>'required',
+            'area'=>'required',
+            'sub_area'=>'required',
           ];
         //dd($reglas);
         $this->validate($reglas,
@@ -74,11 +94,13 @@ class NuevoUsuario extends Component
         $this->procesando=1;
 
         User::create([
-            'usuario'=>$this->usuario,
+            'user'=>$this->user,
             'name'=>$this->nombre,
             'puesto'=> $this->puesto,
             'compania'=> $this->compania,
             'email'=>$this->email,
+            'area'=>$this->area,
+            'sub_area'=>$this->sub_area,
             'password'=>'$2y$10$l3Ie3V7nvjxar33TlexunOeoP.0t9EnvwvyEDkCk1sIdjKjoO1oRK',
         ]);
 

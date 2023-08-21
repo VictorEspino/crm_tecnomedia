@@ -6,6 +6,8 @@ use Livewire\Component;
 use App\Models\User;
 use App\Models\Compania;
 use App\Models\Puesto;
+use App\Models\Area;
+use App\Models\SubArea;
 
 class UpdateUsuario extends Component
 {
@@ -27,6 +29,11 @@ class UpdateUsuario extends Component
     public $companias=[];
     public $puestos=[];
 
+    public $area;
+    public $areas=[];
+    public $sub_area;
+    public $sub_areas=[];
+
     public function render()
     {
         return view('livewire.usuario.update-usuario');
@@ -40,20 +47,37 @@ class UpdateUsuario extends Component
         $this->open=true;
         $this->procesando=0;
         $user=User::find($this->id_user);
+
+        $this->areas=Area::where('estatus',1)
+                        ->orderBy('nombre','asc')
+                        ->get();
+        $this->sub_areas=SubArea::where('area_id',$user->area)
+                                ->where('estatus',1)
+                                ->orderBy('nombre','asc')
+                                ->get();        
         $this->companias=Compania::where('estatus',1)
                         ->orderBy('nombre','asc')
                         ->get();
-        $this->puestos=Puesto::where('visible',1)->orderBy('nombre','asc')
+        $this->puestos=Puesto::where('estatus',1)->orderBy('puesto','asc')
                         ->get();
         $this->nombre=$user->name;
-        $this->usuario=$user->usuario;
+        $this->user=$user->user;
         $this->email_inicial=$user->email;
         $this->email=$user->email;
         $this->puesto=$user->puesto;
         $this->compania=$user->compania;
         $this->estatus=$user->estatus;
+        $this->area=$user->area;
+        $this->sub_area=$user->sub_area;
     }
 
+    public function updatedArea()
+    {
+        $this->sub_areas=SubArea::where('area_id',$this->area)
+                                ->where('estatus',1)
+                                ->orderBy('nombre','asc')
+                                ->get();
+    }
     public function cancelar()
     {
         $this->open=false;
@@ -71,6 +95,8 @@ class UpdateUsuario extends Component
                         'name'=>$this->nombre,
                         'puesto'=>$this->puesto,
                         'compania'=>$this->compania,
+                        'area'=>$this->area,
+                        'sub_area'=>$this->sub_area,
             ]);
         $this->open=false;
         $this->emit('usuarioModificado');
@@ -83,6 +109,8 @@ class UpdateUsuario extends Component
             'nombre' => 'required',
             'puesto' => 'required',
             'compania'=>'required',
+            'area'=>'required',
+            'sub_area'=>'required',
           ];
         if($this->email_inicial!=$this->email)
         {

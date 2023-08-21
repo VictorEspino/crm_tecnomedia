@@ -24,12 +24,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'usuario',
+        'user',
         'puesto',
         'compania',
         'name',
         'email',
         'password',
+        'area',
+        'sub_area',
     ];
 
     /**
@@ -65,5 +67,18 @@ class User extends Authenticatable
     public function compania_desc()
     {
         return $this->belongsTo(Compania::class,'compania');
+    }
+
+    public function area_user()
+    {
+        return $this->belongsTo(Area::class,'area');
+    }
+    public function subarea()
+    {
+        return $this->belongsTo(SubArea::class,'sub_area');
+    }
+    public function puesto_desc()
+    {
+        return $this->belongsTo(Puesto::class,'puesto');
     }
 }

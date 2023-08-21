@@ -42,8 +42,8 @@
             $registros=$registros+1;   
             @endphp
             <div class="w-full flex flex-row bg-white rounded-lg shadow-lg p-3 border border-blue-200">
-                <div class="w-1/3 text-gray-700 font-semibold text-xl px-3">{{$user_listado->name}}<br/><span class="text-xs">({{$user_listado->usuario}})</span></div>
-                <div class="w-1/6 text-gray-700 text-xs px-2">{{$user_listado->puesto}}</div>
+                <div class="w-1/3 text-gray-700 font-semibold text-xl px-3">{{$user_listado->name}}<br/><span class="text-xs">({{$user_listado->user}})</span></div>
+                <div class="w-1/6 text-gray-700 text-xs px-2">{{$user_listado->puesto_desc->puesto}}</div>
                 <div class="w-1/6 text-gray-700 text-xs px-2">Compania: {{$user_listado->compania_desc->nombre}}</div>
                 <div class="w-1/6 text-gray-700 text-3xl flex justify-center flex flex-col text-center">
                     @if($user_listado->estatus=="1")

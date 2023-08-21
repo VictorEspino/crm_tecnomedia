@@ -27,7 +27,7 @@ class ShowUsuarios extends Component
 
     public function render()
     {
-        $users=User::with('compania_desc')->where('name','like','%'.$this->filtro.'%')
+        $users=User::with('compania_desc','puesto_desc')->where('name','like','%'.$this->filtro.'%')
                         ->where('visible',1)
                         ->orderBy('name','asc')
                         ->paginate($this->elementos);

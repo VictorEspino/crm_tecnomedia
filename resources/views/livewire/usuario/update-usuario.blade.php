@@ -26,8 +26,8 @@
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/2">
                         <x-jet-label value="User" />
-                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="usuario" readonly/>
-                        @error('usuario') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="user" readonly/>
+                        @error('user') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/2">
                         <x-jet-label value="Email" />
@@ -45,7 +45,7 @@
                     <select name="puesto" wire:model.defer="puesto" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
                         <option value=''></option>
                         @foreach($puestos as $puesto_opcion)
-                        <option value='{{$puesto_opcion->nombre}}'>{{$puesto_opcion->nombre}}</option>
+                        <option value='{{$puesto_opcion->id}}'>{{$puesto_opcion->puesto}}</option>
                         @endforeach
                     </select> 
                     @error('puesto') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
@@ -60,6 +60,28 @@
                             @endforeach
                         </select>  
                         @error('compania') <span class="text-xs text-red-400">{{ $message }}</span> @enderror 
+                    </div>
+                </div>
+                <div class="w-full mb-2 flex flex-row space-x-3">
+                    <div class="w-1/2">
+                        <x-jet-label value="Area" />
+                        <select name="area" wire:model="area" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option></option>
+                            @foreach($areas as $opcion)
+                                <option value="{{$opcion->id}}">{{$opcion->nombre}}</option>
+                            @endforeach
+                        </select>  
+                        @error('area') <span class="text-xs text-red-400">{{ $message }}</span> @enderror 
+                    </div>
+                    <div class="w-1/2">
+                        <x-jet-label value="Sub Area" />
+                        <select name="sub_area" wire:model.defer="sub_area" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                            <option></option>
+                            @foreach($sub_areas as $opcion)
+                                <option value="{{$opcion->id}}">{{$opcion->nombre}}</option>
+                            @endforeach
+                        </select> 
+                        @error('sub_area') <span class="text-xs text-red-400">{{ $message }}</span> @enderror 
                     </div>
                 </div>
             </div>
