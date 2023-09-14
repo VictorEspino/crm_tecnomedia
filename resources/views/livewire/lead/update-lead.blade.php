@@ -60,16 +60,42 @@
                                 <td class="px-2 py-1">Detalles</td>
                                 <td class="px-2 py-1">Gasto</td>
                                 <td class="px-2 py-1">Concepto</td>
+                                <td class="px-2 py-1">Due date</td>
                                 <td class="px-2 py-1">Estatus Autorizacion</td>
                             </tr>
                             @foreach($bitacora_leads as $registro)
-                            <tr class="text-xs pt-2 border-b font-bold">
+                            <tr class="text-xs pt-2 border-b font-thin">
                                 <td class="px-2 py-1">{{$registro->created_at}}</td>
                                 <td class="px-2 py-1">{{$registro->tipo->nombre}}</td>
                                 <td class="px-2 py-1">{{$registro->detalles}}</td>
-                                <td class="px-2 py-1">{{$registro->gasto}}</td>
-                                <td class="px-2 py-1">{{$registro->concepto}}</td>
-                                <td class="px-2 py-1">{{$registro->estatus_autorizacion==0?'Pendiente':($registro->estatus_autorizacion==1?'Autorizado':'Rechazado')}}</td>
+                                <td class="px-2 py-1">${{number_format($registro->gasto,2)}}</td>
+                                <td class="px-2 py-1">{{$registro->concepto_gasto}}</td>
+                                <td class="px-2 py-1">{{$registro->due_date}}</td>
+                                <td class="px-2 py-1">
+                                    @php
+                                     if ($registro->ticket_id>0)
+                                        {
+                                     @endphp
+                                         <a target="_blank" class="border-0" href="{{$registro->ticket_id>0?route('ticket',['id'=>$registro->ticket_id]):''}}">
+                                     @php       
+                                        }
+                                    @endphp  
+  
+                                        {{$registro->ticket_id>0?
+                                            ($registro->ticket->estatus==1?'Pendiente':
+                                                ($registro->ticket->resultado_autorizacion==1?'Autorizado':'Rechazado')
+                                            )
+                                            :
+                                            'NA'}}
+                                    @php
+                                    if ($registro->ticket_id>0)
+                                            {
+                                    @endphp
+                                        </a>
+                                    @php
+                                            }
+                                    @endphp
+                                </td>
                             </tr>
                             @endforeach
                         </table>
@@ -121,7 +147,7 @@
             </div>
         </x-slot>
         <x-slot name="footer">
-            <x-jet-secondary-button wire:click="cancelar">CANCELAR</x-jet-secondary-button>
+            <x-jet-secondary-button wire:click="cancelar" autofocus>CANCELAR</x-jet-secondary-button>
             <button {{$procesando==1?'disabled':''}} class='inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring focus:ring-gray-300 disabled:opacity-25 transition' wire:click.prevent="guardar_bitacoras">GUARDAR</button>
         </x-slot>
     </x-jet-dialog-modal>

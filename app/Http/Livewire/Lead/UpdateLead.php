@@ -57,7 +57,7 @@ class UpdateLead extends Component
         $this->oportunidad=$this->lead->oportunidad;
         $this->partner=$this->lead->partner;
 
-        $this->bitacora_leads=BitacoraLead::with('tipo')
+        $this->bitacora_leads=BitacoraLead::with('tipo','ticket')
                                             ->where('lead_id',$this->lead_id)
                                             ->orderBy('id','desc')
                                             ->get();
@@ -90,10 +90,15 @@ class UpdateLead extends Component
             $reglas = array_merge($reglas, [
               'nuevas_bitacoras.'.$index.'.tipo' => 'required',
               'nuevas_bitacoras.'.$index.'.detalles' => 'required',
-              'nuevas_bitacoras.'.$index.'.gasto' => 'numeric',
-              'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required',
+              'nuevas_bitacoras.'.$index.'.gasto' => 'numeric',                            
               'nuevas_bitacoras.'.$index.'.due_date' => 'required',
-            ]);
+                ]);
+            if($this->nuevas_bitacoras[$index]['gasto']>0)
+            {
+                $reglas = array_merge($reglas, [
+                'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required',
+                ]);
+            }
           }
         //dd($reglas);
         $this->validate($reglas,
@@ -109,6 +114,11 @@ class UpdateLead extends Component
         $this->procesando=1;
         foreach($this->nuevas_bitacoras as $nueva)
         {
+            $ticket_id=0;
+            if($nueva['gasto']>0)
+            {
+                $ticket_id=nuevoTicketSistema(160,'AUTORIZACION DE GASTO DE PROMOCION ('.$this->razon_social.')','Se solicita la autorizacion de gasto por $'.$nueva['gasto'].', para el concepto: '.$nueva['concepto_gasto']);
+            }
             BitacoraLead::create([
             'user_id'=>Auth::user()->id,
             'lead_id'=>$this->lead_id,
@@ -117,6 +127,7 @@ class UpdateLead extends Component
             'gasto'=>$nueva['gasto'],
             'concepto_gasto'=>$nueva['concepto_gasto'],
             'due_date'=>$nueva['due_date'],
+            'ticket_id'=>$ticket_id,
             ]);
         }
         $this->emit('alert_ok','El lead se actualizo satisfactoriamente');

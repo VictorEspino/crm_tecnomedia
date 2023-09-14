@@ -32,18 +32,14 @@ use App\Http\Controllers\BusquedaController;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->middleware('auth');
+Route::get('/', [TicketController::class,'show'])->middleware('auth');
 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified'
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [TicketController::class,'show'])->name('dashboard');
 });
 
 Route::get('/usuarios',ShowUsuarios::class)->name('usuarios')->middleware('auth');
@@ -83,3 +79,6 @@ Route::get('/tickets_cerrados',Cerrados::class)->name('tickets_cerrados')->middl
 Route::get('/atrasos',AvisoAtraso::class)->name('atrasos')->middleware('auth');
 
 Route::get('ticket_impresion/{id}',[TicketController::class,'impresion'])->name('impresion')->middleware('auth');
+
+
+Route::get('/servicios',function(){return (view('servicios.lista_prospectos'));})->name('servicios')->middleware('auth');

@@ -17,6 +17,7 @@ class BitacoraLead extends Model
         'gasto',
         'concepto_gasto',
         'due_date',
+        'ticket_id',
     ];
 
     public function tipo()
@@ -26,5 +27,9 @@ class BitacoraLead extends Model
     public function lead()
     {
         return $this->belongsTo(Lead::class,'lead_id');
+    }
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class,'ticket_id');
     }
 }

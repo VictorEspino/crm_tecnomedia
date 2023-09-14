@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Cotizacion;
 use Livewire\Component;
 use App\Models\UnidadServicio;
 use App\Models\Cotizacion;
+use App\Models\Oportunidad;
 use App\Models\CotizacionSeccion;
 use App\Models\CotizacionSeccionItem;
 use Illuminate\Support\Facades\Auth;
@@ -209,9 +210,15 @@ class NuevaCotizacion extends Component
 
 
     }
-    public function guardar()
+    public function guardar($estatus)
     {
         $this->validacion();
+        $ticket_id=0;
+        if($estatus==1)
+        {
+            $empresa=Oportunidad::with('prospecto')->find($this->oportunidad_id)->prospecto->razon_social;
+            $ticket_id=nuevoTicketSistema(161,'AUTORIZACION DE COTIZACION PARA ('.$empresa.')','Se solicita la autorizacion de la siguiente propuesta economica:');
+        }
         $cotizacion_creada=Cotizacion::create([
             'oportunidad_id'=>$this->oportunidad_id,
             'fecha_presentacion'=>$this->fecha_presentacion,
@@ -221,6 +228,8 @@ class NuevaCotizacion extends Component
             'compania_id'=>$this->compania_id,
             'moneda_id'=>$this->moneda_id,
             'anos'=>$this->años,
+            'estatus'=>$estatus,
+            'ticket_id'=>$ticket_id,
         ]);
         foreach($this->secciones as $index=>$seccion)
         {

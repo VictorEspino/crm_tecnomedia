@@ -1,11 +1,11 @@
 <form action="{{route('save_ticket')}}" method="POST" enctype="multipart/form-data" id="nuevo_ticket">
 @csrf
 <div>
-    <x-jet-danger-button wire:click.prevent="abrir_ventana" class="bg-green-500 hover:bg-green-700 border-green-600"><b> + </b>CREAR NUEVO TICKET</x-jet-danger-button>
+    <x-jet-danger-button wire:click.prevent="abrir_ventana" class="bg-green-500 hover:bg-green-700 border-green-600"><b> + </b>CREAR ACTIVIDAD</x-jet-danger-button>
 
     <x-jet-dialog-modal wire:model="open" maxWidth="5xl">
         <x-slot name="title">
-            Crear nuevo ticket
+            Crear actividad
         </x-slot>
         <x-slot name="content">
             
@@ -251,7 +251,7 @@
         </x-slot>
         <x-slot name="footer">
             <x-jet-secondary-button wire:click.prevent="cancelar">CANCELAR</x-jet-secondary-button>
-            <button {{$procesando==1?'disabled':''}} class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition" wire:click.prevent="guardar">{{$procesando==1?'PROCESANDO...':'GUARDAR TICKET'}}</button>
+            <button {{$procesando==1?'disabled':''}} class="inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 active:bg-red-600 disabled:opacity-25 transition" wire:click.prevent="guardar">{{$procesando==1?'PROCESANDO...':'GUARDAR'}}</button>
         </x-slot>
     
     </x-jet-dialog-modal>

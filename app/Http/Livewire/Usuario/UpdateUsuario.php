@@ -26,6 +26,8 @@ class UpdateUsuario extends Component
     public $compania;
     public $estatus;
 
+    public $user;
+
     public $companias=[];
     public $puestos=[];
 
@@ -91,6 +93,7 @@ class UpdateUsuario extends Component
         $this->procesando=1;
         User::where('id',$this->id_user)
             ->update([
+                        'user'=>$this->user,
                         'email'=>$this->email,
                         'name'=>$this->nombre,
                         'puesto'=>$this->puesto,
@@ -105,6 +108,7 @@ class UpdateUsuario extends Component
     private function validacion()
     {
         $reglas = [
+            'user'=>'required',
             'email'=>'required|email',
             'nombre' => 'required',
             'puesto' => 'required',

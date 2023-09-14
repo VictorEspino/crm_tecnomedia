@@ -60,6 +60,7 @@ class OportunidadController extends Controller
                             $query->where('linea_negocio_id',$linea);
                         })
                         //LAS SIGUIENTES CONDICIONES DETERMINAN EL ALCANCE DE LA CONSULTA DE ACUERDO AL PERFIL
+                        /*
                         ->when (Auth::user()->puesto==1,function ($query)
                         {
                             $query->where('ejecutivo',Auth::user()->id);
@@ -67,7 +68,7 @@ class OportunidadController extends Controller
                         ->when (Auth::user()->puesto==2,function ($query)
                         {
                             $query->where('sub_area',Auth::user()->sub_area);
-                        })
+                        })*/
                         ->when($filtro && $filtro_text!='',function ($query) use ($filtro_text)
                             {
                                 $query->where(function ($anidado) use ($filtro_text){
@@ -107,6 +108,7 @@ class OportunidadController extends Controller
                             $query->where('linea_negocio_id',$linea);
                         })
                         //LAS SIGUIENTES CONDICIONES DETERMINAN EL ALCANCE DE LA CONSULTA DE ACUERDO AL PERFIL
+                        /*
                         ->when (Auth::user()->puesto==1,function ($query)
                         {
                             $query->where('ejecutivo',Auth::user()->id);
@@ -114,7 +116,7 @@ class OportunidadController extends Controller
                         ->when (Auth::user()->puesto==2,function ($query)
                         {
                             $query->where('sub_area',Auth::user()->sub_area);
-                        })
+                        })*/
                         ->when($filtro && $filtro_text!='',function ($query) use ($filtro_text)
                             {
                                 $query->where(function ($anidado) use ($filtro_text){

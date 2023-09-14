@@ -18,5 +18,17 @@ class Cotizacion extends Model
         'compania_id',
         'moneda_id',
         'anos',
+        'estatus',
+        'ticket_id',
     ];
+
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class,'ticket_id');
+    }
+
+    public function oportunidad()
+    {
+        return $this->belongsTo(Oportunidad::class,'oportunidad_id');
+    }
 }

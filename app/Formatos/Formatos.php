@@ -1,5 +1,9 @@
 <?php
 
+function folio($id)
+{
+    return('#'.str_pad($id,10,'0',STR_PAD_LEFT));
+}
 function ticket($ticket)
 {
     return('#'.str_pad($ticket,10,'0',STR_PAD_LEFT));

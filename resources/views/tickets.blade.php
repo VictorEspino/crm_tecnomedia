@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        {{ __('Tickets') }}
+        {{ __('Actividades') }}
     </x-slot>
     <x-ticket-nav />
     <div class="w-full h-full bg-gray-100 flex flex-col pt-5 px-8">
@@ -131,7 +131,7 @@
                 <div class="w-full flex flex-col pt-8 rounded-t-lg">
                     <div class="w-full bg-gray-200 py-1 px-2 font-bold text-gray-600 rounded-t-lg flex flex-row space-x-3">
                         <div class="w-7/12 flex items-center">
-                            Tickets en mis grupos de atencion o como invitado
+                            Actividades en mis grupos de atencion o como invitado
                         </div>
                         <div class="w-5/12 text-xs flex items-center text-center">
                             <select class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" onChange="filtrar(this.value)">

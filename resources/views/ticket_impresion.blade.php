@@ -7,10 +7,10 @@
     <!-- Styles -->
     <link rel="stylesheet" href="{{ mix('css/app.css') }}?{{rand()}}">
     <script src="https://kit.fontawesome.com/a692f93986.js" crossorigin="anonymous"></script>
-    <title>Ticket {{ticket($ticket_id)}}</title>
+    <title>Actividad {{ticket($ticket_id)}}</title>
 </head>
 <body class="p-8">
-    <div class="text-lg font-bold py-2">Ticket</div>
+    <div class="text-lg font-bold py-2">Actividad</div>
     <div class="text-base font-bold pt-2">{{ticket($ticket_id)}} | {{$ticket->asunto}}</div>
     <div class="text-xs font-bold border-b">{{$ticket->topico->nombre}}</div>
     <div class="text-xs pt-2"><span class="font-bold">Autor:</span> {{$ticket->solicitante->name}} - {{$ticket->created_at}}</div>
@@ -20,7 +20,7 @@
     <div class="text-xs pt-2"><span class="font-bold">Asesor:</span> {{$ticket->asesor->name}}</div>
     <div class="text-xs pt-2"><span class="font-bold">Estatus:</span> {{$ticket->estatus==1?'Abierto':'Cerrado'}}</div>
     <div class="text-xs border-b"> {{$ticket->cierre_at}}</div>
-    <div class="text-xs py-2 border-b"><span class="font-bold">Otros invitados al ticket:</span> <br>
+    <div class="text-xs py-2 border-b"><span class="font-bold">Otros invitados a la actividad:</span> <br>
     @foreach($invitados as $invitado_ticket)
         <span class="font-bold">{{$invitado_ticket['user']}}</span> ({{$invitado_ticket['area']}} - {{$invitado_ticket['subarea']}}) |
     @endforeach

@@ -6,7 +6,7 @@
     <div class="flex flex-col w-full text-gray-700 px-2 md:px-8">
         <div class="w-full rounded-t-lg bg-slate-300 p-3 flex flex-col border-b border-gray-800"> <!--ENCABEZADO-->
             <div class="w-full text-lg font-semibold">Base leads</div>
-            <div class="w-full text-sm">({{Auth::user()->usuario}}) - {{Auth::user()->name}}</div>            
+            <div class="w-full text-sm">({{Auth::user()->user}}) - {{Auth::user()->name}}</div>            
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
         
@@ -89,7 +89,7 @@
                 <div class="w-full flex justify-center">
                 <table>
                     <tr class="">
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Compañia</td>
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Folio</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Vendedor</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Linea de Negocio</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Servicio</td>
@@ -110,8 +110,8 @@
                     {
                 ?>
                     <tr class="">
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->compania->nombre}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->user->name}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{folio($lead->id)}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->user->name}}<br>({{$lead->compania->nombre}})</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->linea_negocio->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->servicio->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$lead->oportunidad}}</td>

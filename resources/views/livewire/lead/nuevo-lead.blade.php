@@ -13,7 +13,7 @@
     <div class="p-10 flex flex-col w-full text-gray-700  px-2 md:px-8">
         <div class="w-full rounded-t-lg bg-slate-300 p-3 flex flex-col border-b border-gray-800"> <!--ENCABEZADO-->
             <div class="w-full text-lg font-semibold">Generar nuevo lead</div>
-            <div class="w-full text-sm">({{Auth::user()->usuario}}) - {{Auth::user()->name}}</div>            
+            <div class="w-full text-sm">({{Auth::user()->user}}) - {{Auth::user()->name}}</div>            
             <div class="w-full text-sm">{{App\Models\User::with('compania_desc')->find(Auth::user()->id)->compania_desc->nombre}}</div>            
         </div> <!--FIN ENCABEZADO-->
         <div class="w-full p-3 flex flex-col bg-white"> <!--CONTENIDO-->

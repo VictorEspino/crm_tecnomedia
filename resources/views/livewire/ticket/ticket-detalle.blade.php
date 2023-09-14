@@ -1,12 +1,12 @@
 <div>
     <x-slot name="header">
-        {{ __('Detalle Ticket') }}
+        {{ __('Detalle Actividad') }}
     </x-slot>
     <x-ticket-nav />
     <div class="w-full flex flex-row bg-white h-screen">
         <div class="flex-1 p-4 flex flex-col text-gray-600">
             <div class="w-full pb-6">
-                <div class="text-xl font-semibold text-gray-600">Ticket: {{ticket($ticket_id)}} - {!!$buscar=="NO"?$asunto:destaca_busqueda($asunto,$busqueda)!!}</div>
+                <div class="text-xl font-semibold text-gray-600">Actividad: {{ticket($ticket_id)}} - {!!$buscar=="NO"?$asunto:destaca_busqueda($asunto,$busqueda)!!}</div>
                 <div class="text-xs">{{$topico_nombre}}</div>
                 @if($emite_autorizacion==1 && $estatus==2)
                 <div class="text-xl font-bold {{$resultado_autorizacion==1?'text-green-500':'text-red-500'}}">Solicitud {{$resultado_autorizacion==1?'AUTORIZADA':'RECHAZADA'}}</div>
@@ -80,7 +80,7 @@
                     @else
                         @if($estatus!=2)
                         <span class="w-full flex justify-center text-red-500 font-bold">
-                            ESTE TICKET ESTA EN ESPERA DE UNA RESPUESTA DEL SOLICITANTE
+                            ESTA ACTIVIDAD ESTA EN ESPERA DE UNA RESPUESTA DEL SOLICITANTE
                         </span>
                         @endif
                     @endif
@@ -90,7 +90,7 @@
                         <div class="px-2 bg-amber-200 rounded-md"></div>
                         <div class="text-sm flex items-center">&nbsp;Nota atencion</div>
                         <div class="px-2 bg-lime-200 rounded-md ml-3"></div>
-                        <div class="text-sm flex items-center">&nbsp;Creador del ticket</div>
+                        <div class="text-sm flex items-center">&nbsp;Creador actividad</div>
                         <div class="px-2 bg-sky-200 rounded-md ml-3"></div>
                         <div class="text-sm flex items-center">&nbsp;Staff asignado</div>
                         @if($actividades_total>1)
@@ -243,7 +243,7 @@
             </div>
             <div class="w-full flex flex-row justify-center pt-6">
                 <div class="py-1 px-3 font-bold text-gray-500 text-sm">
-                    Otros invitados al ticket
+                    Otros invitados a la actividad
                 </div>
             </div>
             <div class="w-full flex flex-col justify-center text-center text-xs">
@@ -266,7 +266,7 @@
                 <div class="w-24 text-7xl text-amber-500 flex justify-center py-8"><i class="far fa-question-circle"></i></div>
                 <div class="flex-1 text-sm text-gray-600 px-5 flex flex-col items-center">  
                     <div class="pt-4">
-                    Esta accion dara por <b>RECHAZADA</b> la peticion del solicitante y dara el ticket por CERRADO<br><br>
+                    Esta accion dara por <b>RECHAZADA</b> la peticion del solicitante y dara la actividad por CERRADO<br><br>
                     </div>
                     <div>
                     ¿Desea continuar?
@@ -289,7 +289,7 @@
                 <div class="w-24 text-7xl text-amber-500 flex justify-center py-8"><i class="far fa-question-circle"></i></div>
                 <div class="flex-1 text-sm text-gray-600 px-5 flex flex-col items-center">  
                     <div class="pt-4">
-                    Esta accion dara por <b>AUTORIZADA</b> la peticion del solicitante y dara el ticket por CERRADO<br><br>
+                    Esta accion dara por <b>AUTORIZADA</b> la peticion del solicitante y dara la actividad por CERRADO<br><br>
                     </div>
                     <div>
                     ¿Desea continuar?
@@ -312,7 +312,7 @@
                 <div class="w-24 text-7xl text-amber-500 flex justify-center py-8"><i class="far fa-question-circle"></i></div>
                 <div class="flex-1 text-sm text-gray-600 px-5 flex flex-col items-center">  
                     <div class="pt-4">
-                    Esta accion cambiara el estatus del ticket a <b>{{$nuevo_posible_estatus}}</b><br><br>
+                    Esta accion cambiara el estatus la actividad a <b>{{$nuevo_posible_estatus}}</b><br><br>
                     </div>
                     <div>
                     ¿Desea continuar?
@@ -328,7 +328,7 @@
     </x-jet-dialog-modal>
     <x-jet-dialog-modal wire:model="open_reasignar" maxWidth="lg">
         <x-slot name="title">
-            Reasignar ticket
+            Reasignar actividad
         </x-slot>
         <x-slot name="content">
             <div class="w-full flex flex-col">

@@ -111,6 +111,19 @@
                              </div>
                              <div class="text pt-3">
                                 <i class="fas fa-tasks"></i>
+                                Servicios Activos
+                            </div>
+                            <div class="flex flex-col">
+
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('servicios')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Clientes
+                                    </a>
+                                </div>        
+                             </div>
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
                                 Leads
                             </div>
                             <div class="flex flex-col">
@@ -168,7 +181,7 @@
                              </div>
                              <div class="text pt-3">
                                 <i class="fas fa-tasks"></i>
-                                Tickets
+                                Actividades
                             </div>
                             <div class="flex flex-col">
                                 <div class="pl-5 pt-2 text-yellow-300">
@@ -192,7 +205,7 @@
                                 <div class="pl-5 pt-2 text-yellow-300">
                                     <a href="{{ route('tickets') }}">
                                         <span class="text-gray-200"><i class="fas fa-file-invoice"></i></span>
-                                        Tickets
+                                        Actividades
                                     </a>
                                 </div>     
                             </div>
