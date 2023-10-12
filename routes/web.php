@@ -19,6 +19,7 @@ use App\Http\Livewire\Ticket\Cerrados;
 use App\Http\Livewire\Ticket\AvisoAtraso;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\BusquedaController;
+use App\Http\Controllers\MainController;
 
 
 /*
@@ -81,4 +82,4 @@ Route::get('/atrasos',AvisoAtraso::class)->name('atrasos')->middleware('auth');
 Route::get('ticket_impresion/{id}',[TicketController::class,'impresion'])->name('impresion')->middleware('auth');
 
 
-Route::get('/servicios',function(){return (view('servicios.lista_prospectos'));})->name('servicios')->middleware('auth');
+Route::get('/principal',[MainController::class,'base_principal'])->name('principal')->middleware('auth');

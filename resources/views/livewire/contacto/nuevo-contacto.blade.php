@@ -24,6 +24,7 @@
                         <x-jet-label value="Area" />
                         <select class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" type="text"  wire:model.defer="area">
                             <option value=""></option>
+                            <option value="Compras">Compras</option>
                             <option value="Sistemas">Sistemas</option>
                             <option value="Ventas">Ventas</option>
                             <option value="Finanzas">Finanzas</option>

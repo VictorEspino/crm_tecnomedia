@@ -111,14 +111,14 @@
                              </div>
                              <div class="text pt-3">
                                 <i class="fas fa-tasks"></i>
-                                Servicios Activos
+                                Tablero de control
                             </div>
                             <div class="flex flex-col">
 
                                 <div class="pl-5 pt-2 text-lime-300">
-                                    <a href="{{route('servicios')}}">
+                                    <a href="{{route('principal')}}">
                                         <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
-                                        Clientes
+                                        Principal
                                     </a>
                                 </div>        
                              </div>

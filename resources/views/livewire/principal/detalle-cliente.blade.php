@@ -1,7 +1,7 @@
 <div>
 <div class="w-full text-base flex flex-col">
-        <div class="w-full">
-            <i class="text-blue-400 fas fa-edit" wire:click='cargar' style="cursor: pointer;"></i>
+        <div class="w-full px-3">
+            <i class="text-blue-400 fas fa-info" wire:click='cargar' style="cursor: pointer;"></i>
         </div>
         <div class="text-xs w-full">
             
@@ -10,20 +10,26 @@
 
     <x-jet-dialog-modal wire:model="open" maxWidth="7xl">
         <x-slot name="title">
-            Servicios Activos
+            Ficha de cliente
         </x-slot>
         <x-slot name="content">
-            <div class="flex flex-col w-full">
+            <div class="flex flex-col w-full pb-6">
                 <div class="w-full mb-2 flex flex-row space-x-3">
-                    <div class="w-1/2 flex justify-center">
-                        <span class="text-xl font-bold">ESTAFETA</span>
+                    <div class="w-1/2 flex justify-center flex flex-col">
+                        <div class="w-full text-xl font-bold">{{$razon_social}} {{$regimen}}</div>
+                        <div class="w-full text-base">{{$calle}} #{{$num_ext}} ({{$num_int}})</div>
+                        <div class="w-full text-base">Col. {{$colonia}}, CP {{$cp}}</div>
+                        <div class="w-full text-base">{{$ciudad}}, {{$pais}}</div>
                     </div>
                     <div class="w-1/2 flex flex-col">
                         <div class="w-full">
-                            <span class="text-sm font-thin">RFC : RLM998877AA1</span>
+                            <span class="text-sm font-thin">RFC : {{$rfc}}</span>
                         </div>
                         <div class="w-full">
-                            <span class="text-sm font-thin">Inicio de Operaciones : 1992-02-16</span>
+                            <span class="text-sm font-thin">Inicio de Operaciones :  {{$fecha_io}}</span>
+                        </div>
+                        <div class="w-full">
+                            <span class="text-sm font-thin">Dias pago :  {{$terminos_pago}}</span>
                         </div>
                     </div>
                 </div>
@@ -32,39 +38,58 @@
             <div class="flex flex-col md:space-x-5 md:space-y-0 items-start md:flex-row text-sm">
                 <div class="w-full md:w-1/2 flex flex-col justify-center md:p-5 p-3">
                     <div class="w-full bg-gray-200 flex flex-col p-2 rounded-t-lg">Licenciamiento</div>
-                    <div class="w-full flex flex-row border rounded-b-lg shadow-lg pb-5">  
-                        <!--LICENCIA-->
-                        <div class="w-full p-3 flex flex-col">
+                    <div class="w-full flex flex-col border rounded-b-lg shadow-lg pb-5">  
+                        @foreach ($licencias as $licencia)
+                        <div class="w-full p-3 flex flex-col border">
                             <div class="flex flex-row">
                                 <div class="w-3/4 text-base font-bold text-blue-600">
-                                    CA API
+                                    {{$licencia->producto}}
                                 </div>
-                                <div class="w-1/4">
-                                    7 Licencias
+                                <div class="w-1/4 font-bold">
+                                    {{$licencia->licencias}} Licencias
                                 </div>    
                             </div>
-                            <div class="w-full p-2">
-                                Seguimiento Renovación de Mantenimiento de Licencia Perpetua
+                            <div class="flex flex-col">
+                                <div class="w-3/4 text-base font-bold text-orange-400">
+                                    {{$licencia->linea_negocio->nombre}}
+                                </div>
+                            </div>
+                            <div class="w-full p-2 font-bold">
+                                {{$licencia->servicio}}
                             </div>
                             <div class="flex flex-row space-x-3">
                                 <div class="w-1/3">
-                                    Inicio Vigencia <br><span class="font-bold">2024-01-31</span>
+                                    Inicio Vigencia <br><span class="font-bold">{{$licencia->inicio_vigencia}}</span>
                                 </div>
                                 <div class="w-1/3">
-                                    Fin Vigencia <br><span class="font-bold">2025-01-30</span>
+                                    Fin Vigencia <br><span class="font-bold">{{$licencia->fin_vigencia}}</span>
                                 </div>
                                 <div class="w-1/3 font-bold text-green-500">
                                     Al Corriente
                                 </div>
                             </div>
+                            <div class="flex flex-row space-x-3 py-3 justify-center">
+                                <div class="w-1/2 flex justify-center">
+                                    Precio sin IVA : <span class="font-bold"> ${{number_format($licencia->precio_sin_iva,0)}} ({{$licencia->moneda->nombre}})</span>
+                                </div>
+                                <div class="w-1/2 flex justify-center">
+                                    Años Contrato : <span class="font-bold">  {{$licencia->años_contrato}}</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-row space-x-3">
+                                <div class="w-full">
+                                    Observaciones <br><span class="font-bold">{{$licencia->observaciones}}</span>
+                                </div>
+                            </div>
                         </div>
-                        <!--FIN LICENCIA-->
+                        @endforeach
                     </div>
                 </div>
                 <div class="w-full md:w-1/2 flex flex-col justify-center md:p-5 p-3">
                     <div class="w-full bg-gray-200 flex flex-col p-2 rounded-t-lg">Servicios</div>
-                    <div class="w-full flex flex-row border rounded-b-lg shadow-lg pb-5">  
+                    <div class="w-full flex flex-col border rounded-b-lg shadow-lg pb-5">  
                         <!--SERVICIO-->
+                        <!--
                         <div class="w-full p-3 flex flex-col">
                             <div class="flex flex-row">
                                 <div class="w-3/4 text-base font-bold text-blue-600">
@@ -98,6 +123,7 @@ Migración de Portal & adecuaciones al portal (35 Jornadas)
                                 </div>
                             </div>
                         </div>
+                        -->
                         <!--SERVICIO-->
                     </div>
                 </div>
