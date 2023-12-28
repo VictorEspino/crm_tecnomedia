@@ -27,4 +27,8 @@ class BitacoraOportunidad extends Model
     {
         return $this->belongsTo(Oportunidad::class,'oportunidad_id');
     }
+    public function c_gasto()
+    {
+        return $this->belongsTo(ConceptoGasto::class,'concepto_gasto');
+    }
 }

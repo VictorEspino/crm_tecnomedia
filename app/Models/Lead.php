@@ -58,4 +58,8 @@ class Lead extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function part()
+    {
+        return $this->belongsTo(Partner::class,'partner');
+    }
 }

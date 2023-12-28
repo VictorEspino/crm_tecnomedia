@@ -22,6 +22,7 @@ class Prospecto extends Model
             'num_int',
             'cp',
             'ciudad',
-            'pais'
+            'pais',
+            'estado',
     ];
 }

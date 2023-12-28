@@ -128,12 +128,13 @@ Migración de Portal & adecuaciones al portal (35 Jornadas)
                     </div>
                 </div>
             </div>
+        <!--
             <div class="w-full text-bold text-indigo-500 text-xl border-t border-b">Prospeccion Actual</div>
             <div class="flex flex-col md:space-x-5 md:space-y-0 items-start md:flex-row text-sm">
                 <div class="w-full md:w-full flex flex-col justify-center md:p-5 p-3">
                     <div class="w-full bg-gray-200 flex flex-col p-2 rounded-t-lg">Oportunidades</div>
                     <div class="w-full flex flex-row border rounded-b-lg shadow-lg pb-5">  
-                        <!--OPORTUNIDAD-->
+                        
                         <div class="w-full p-3 flex flex-col">
                             <div class="flex flex-row">
                                 <div class="w-3/4 text-base font-bold text-blue-600">
@@ -161,11 +162,11 @@ Migración de Portal & adecuaciones al portal (35 Jornadas)
                                 Etapa : <span class="text-base font-bold text-red-400">Negociación</span>
                             </div>
                         </div>
-                        <!--FIN LICENCIA-->
+                        
                     </div>
                 </div>
             </div>
-
+        -->
 
 
 

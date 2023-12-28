@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Oportunidad;
 use App\Models\BitacoraOportunidad;
 use App\Models\TipoBitacoraOportunidad;
+use App\Models\ConceptoGasto;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateOportunidad extends Component
@@ -34,6 +35,8 @@ class UpdateOportunidad extends Component
 
     public $tipos=[];
 
+    public $concepto_gastos=[];
+
     public function render()
     {
         return view('livewire.oportunidad.update-oportunidad');
@@ -59,12 +62,13 @@ class UpdateOportunidad extends Component
         $this->oportunidad_text=$this->oportunidad->oportunidad;
         $this->partner=$this->oportunidad->partner;
 
-        $this->bitacora_oportunidads=BitacoraOportunidad::with('tipo')
+        $this->bitacora_oportunidads=BitacoraOportunidad::with('tipo','c_gasto')
                                             ->where('oportunidad_id',$this->oportunidad_id)
                                             ->orderBy('id','desc')
                                             ->get();
 
         $this->tipos=TipoBitacoraOportunidad::where('visible',1)->orderBy('id','asc')->get();
+        $this->concepto_gastos=ConceptoGasto::all();
         
         if(is_null($this->bitacora_oportunidads)) $this->bitacora_oportunidads=[];
     }
@@ -75,7 +79,7 @@ class UpdateOportunidad extends Component
             'tipo'=>'',
             'detalles'=>'',
             'gasto'=>'0',
-            'concepto_gasto'=>'',
+            'concepto_gasto'=>'1',
             'due_date'=>'',
         ];
     }
@@ -92,16 +96,22 @@ class UpdateOportunidad extends Component
             $reglas = array_merge($reglas, [
               'nuevas_bitacoras.'.$index.'.tipo' => 'required',
               'nuevas_bitacoras.'.$index.'.detalles' => 'required',
-              'nuevas_bitacoras.'.$index.'.gasto' => 'numeric',
-              'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required',
+              'nuevas_bitacoras.'.$index.'.gasto' => 'numeric',                            
               'nuevas_bitacoras.'.$index.'.due_date' => 'required',
-            ]);
+                ]);
+            if($this->nuevas_bitacoras[$index]['gasto']>0)
+            {
+                $reglas = array_merge($reglas, [
+                'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required|numeric|min:2',
+                ]);
+            }
           }
         //dd($reglas);
         $this->validate($reglas,
             [
                 'required' => 'Campo requerido.',
-                'numeric'=>'Debe ser un numero'
+                'numeric'=>'Debe ser un numero',
+                'min'=>'Seleccione una opcion valida'
             ],
           );
     }
@@ -117,11 +127,11 @@ class UpdateOportunidad extends Component
             'tipo_id'=>$nueva['tipo'],
             'detalles'=>$nueva['detalles'],
             'gasto'=>$nueva['gasto'],
-            'concepto_gasto'=>$nueva['concepto_gasto'],
+            'concepto_gasto'=>$nueva['gasto']=='0'?1:$nueva['concepto_gasto'],
             'due_date'=>$nueva['due_date'],
             ]);
         }
-        $this->emit('alert_ok','El oportunidad se actualizo satisfactoriamente');
+        $this->emit('alert_ok','La oportunidad se actualizo satisfactoriamente');
         $this->resetErrorBag();
         $this->resetValidation();
         $this->resetExcept('oportunidad_id');

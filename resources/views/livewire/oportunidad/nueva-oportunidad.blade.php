@@ -124,15 +124,9 @@
                         <span class="text-xs text-ttds">Partner/Fabricante</span><br>
                         <select wire:model="partner" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                             <option value=""></option>
-                            <option value="Netscout Systems, Inc">Netscout Systems, Inc</option>
-                            <option value="Novell de México S.A. de C.V.">Novell de México S.A. de C.V.</option>
-                            <option value="Solace Corporation">Solace Corporation</option>
-                            <option value="AppDynamics, LLC">AppDynamics, LLC</option>
-                            <option value="Harness, Inc">Harness, Inc</option>
-                            <option value="Google, LLC">Google, LLC</option>
-                            <option value="Blazerunner, LLC">Blazerunner, LLC</option>
-                            <option value="Veracode, Inc">Veracode, Inc</option>
-                            <option value="Zscaler, Inc">Zscaler, Inc</option>
+                            @foreach ($partners as $part)
+                            <option value="{{$part->id}}">{{$part->nombre}}</option>    
+                            @endforeach
                         </select>
                         
                         @error('partner') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
@@ -170,10 +164,8 @@
                         <input wire:model="costo_consultoria" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                         @error('costo_consultoria') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                     </div>
-                    <div class="w-1/3">
-                        <span class="text-xs text-ttds">Margen Estimado</span><br>
-                        <input wire:model="margen_estimado" class="w-full rounded p-1 border border-gray-300 bg-white">                        
-                        @error('margen_estimado') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
+                    <div class="w-1/3 flex justify-center items-center font-bold">
+                        <span class="text-sm text-ttds">Margen Estimado : ${{number_format($margen_estimado)}} ({{number_format($porcentaje_margen*100,2)}}%)</span><br> 
                     </div>
                     <div class="w-1/3">
                         <span class="text-xs text-ttds">Estimacion cierre</span><br>

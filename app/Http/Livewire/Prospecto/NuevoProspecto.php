@@ -4,6 +4,8 @@ namespace App\Http\Livewire\Prospecto;
 
 use Livewire\Component;
 use App\Models\Prospecto;
+use App\Models\CatalogoCodigo;
+use App\Models\RegimenFiscal;
 
 class NuevoProspecto extends Component
 {
@@ -21,7 +23,12 @@ class NuevoProspecto extends Component
     public $num_int;
     public $cp;
     public $ciudad;
+    public $estado;
     public $pais;
+
+    public $opciones_colonia=0;
+    public $colonias=[];
+    public $regimenes=[];
 
     public function render()
     {
@@ -30,6 +37,7 @@ class NuevoProspecto extends Component
     public function nuevo()
     {
         $this->open=true;
+        $this->regimenes=RegimenFiscal::all();
     }
     public function cancelar()
     {
@@ -47,9 +55,10 @@ class NuevoProspecto extends Component
             'calle'=>'required',
             'colonia'=>'required',
             'num_ext'=>'required',
-            'cp'=>'required',
+            'cp'=>'required|numeric|digits:5',
             'ciudad'=>'required',
             'pais'=>'required',
+            'estado'=>'required'
           ];
         //dd($reglas);
         $this->validate($reglas,
@@ -57,7 +66,8 @@ class NuevoProspecto extends Component
                 'required' => 'Campo requerido.',
                 'numeric'=>'Debe ser un numero',
                 'unique'=>'El valor ya existe en la base de datos',
-                'email'=>'Se requiere una direccion de correo valida'
+                'email'=>'Se requiere una direccion de correo valida',
+                'digits'=>'Debe constar de 5 digitos'
             ],
           );
     }
@@ -67,9 +77,9 @@ class NuevoProspecto extends Component
         $this->procesando=1;
 
         Prospecto::create([
-            'rfc'=>$this->rfc,
+            'rfc'=>strtoupper($this->rfc),
             'regimen'=>$this->regimen,
-            'razon_social'=>$this->razon_social,
+            'razon_social'=>strtoupper($this->razon_social),
             'fecha_io'=>$this->fecha_io,
             'terminos_pago'=>$this->terminos_pago,
             'calle'=>$this->calle,
@@ -78,6 +88,7 @@ class NuevoProspecto extends Component
             'cp'=>$this->cp,
             'ciudad'=>$this->ciudad,
             'pais'=>$this->pais,
+            'estado'=>$this->estado,
         ]);
         
         $this->emit('prospectoAgregado');
@@ -86,5 +97,35 @@ class NuevoProspecto extends Component
         $this->resetValidation();
         $this->reset();
 
+    }
+    public function updatedCp()
+    {
+        $this->validarCodigoPostal();
+    }
+    public function validarCodigoPostal()
+    {
+        $filtro=$this->cp;
+        $this->ciudad="";
+        $this->estado="";
+        $this->colonia="";
+        $this->opciones_colonia=0;
+        $this->colonias=[];
+        $opciones=CatalogoCodigo::where('cp',$filtro)->get();
+        foreach($opciones as $opcion)
+        {
+            $this->ciudad=$opcion->ciudad;
+            $this->estado=$opcion->estado;
+            if($this->opciones_colonia==0) //Asigna solo la primera opcion de la colonia;
+            {
+                $this->colonia=$opcion->colonia;
+            }
+            $this->colonias[]=['colonia'=>$opcion->colonia];
+            $this->opciones_colonia=$this->opciones_colonia+1;
+        }
+        if($this->opciones_colonia>0) 
+        {
+            $this->pais='Mexico';
+        }
+        
     }
 }

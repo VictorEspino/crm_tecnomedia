@@ -9,6 +9,8 @@ use App\Models\Prospecto;
 use App\Models\LineaNegocio;
 use App\Models\Servicio;
 use App\Models\Compania;
+use App\Models\EtapaLead;
+use App\Models\Partner;
 use Illuminate\Support\Facades\Auth;
 
 class LeadsController extends Controller
@@ -26,6 +28,8 @@ class LeadsController extends Controller
         $linea=0;
         $servicio=0;
         $compañia=0;
+        $etapa=0;
+        $partner=0;
 
 
         if(isset($_GET['filtro']))
@@ -39,11 +43,21 @@ class LeadsController extends Controller
             $prospecto=$_GET["prospecto"];
             $servicio=$_GET["servicio"];
             $compañia=$_GET["compañia"];
+            $etapa=$_GET["etapa"];
+            $partner=$_GET["partner"];
         }
         if($excel=="NO")
         {
-        $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa')
+        $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa','part')
                         ->orderBy('fecha_contacto','desc')
+                        ->when ($partner>0,function ($query) use ($partner)
+                        {
+                            $query->where('partner',$partner);
+                        })
+                        ->when ($etapa>0,function ($query) use ($etapa)
+                        {
+                            $query->where('etapa_id',$etapa);
+                        })
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {
                             $query->where('prospecto_id',$prospecto);
@@ -90,8 +104,16 @@ class LeadsController extends Controller
         }    
         else
         {
-            $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa')
+            $registros=Lead::with('prospecto','contacto','linea_negocio','servicio','fuente','etapa','part')
                         ->orderBy('fecha_contacto','desc')
+                        ->when ($partner>0,function ($query) use ($partner)
+                        {
+                            $query->where('partner',$partner);
+                        })
+                        ->when ($etapa>0,function ($query) use ($etapa)
+                        {
+                            $query->where('etapa_id',$etapa);
+                        })
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {
                             $query->where('prospecto_id',$prospecto);
@@ -149,13 +171,17 @@ class LeadsController extends Controller
                     'servicio'=>$servicio,
                     'linea'=>$linea,
                     'prospecto'=>$prospecto,
-                    'compañia'=>$compañia
+                    'compañia'=>$compañia,
+                    'etapa'=>$etapa,
+                    'partner'=>$partner,
                     ]);   
         }      
         $prospectos=Prospecto::orderBy('razon_social','ASC')->get(); 
         $lineas=LineaNegocio::all();  
         $servicios=Servicio::all();  
         $compañias=Compania::orderBy('nombre','ASC')->get();      
+        $etapas=EtapaLead::all();     
+        $partners=Partner::all(); 
 
         return(view($excel=="NO"?'leads.base_leads':'leads.export',[
                                     'registros'=>$registros,
@@ -170,6 +196,11 @@ class LeadsController extends Controller
                                     'linea'=>$linea,
                                     'lineas'=>$lineas,
                                     'prospecto'=>$prospecto,
-                                    'prospectos'=>$prospectos]));
+                                    'prospectos'=>$prospectos,
+                                    'etapa'=>$etapa,
+                                    'etapas'=>$etapas,
+                                    'partner'=>$partner,
+                                    'partners'=>$partners,
+                                ]));
     }
 }

@@ -11,6 +11,7 @@ use App\Models\Oportunidad;
 use App\Models\Compania;
 use App\Models\EtapaOportunidad;
 use App\Models\Moneda;
+use App\Models\Partner;
 use Illuminate\Support\Facades\Auth;
 
 class NuevaOportunidad extends Component
@@ -47,13 +48,16 @@ class NuevaOportunidad extends Component
     public $moneda;
     public $monedas=[];
 
-    public $horas_consultoria;
-    public $valor_propuesta;
-    public $costo_fabricante;
-    public $costo_consultoria;
-    public $margen_estimado;
+    public $horas_consultoria=0;
+    public $valor_propuesta=0;
+    public $costo_fabricante=0;
+    public $costo_consultoria=0;
+    public $margen_estimado=0;
+    public $porcentaje_margen=0;
     public $estimacion_cierre;
     public $dias_credito;
+
+    public $partners=[];
 
     protected $listeners = ['prospectoAgregado' => 'carga_nuevo_prospecto','contactoAgregado'=>'carga_nuevo_contacto'];
 
@@ -81,6 +85,7 @@ class NuevaOportunidad extends Component
         $this->lineas_negocio=LineaNegocio::all();
         $this->servicios=Servicio::all();
         $this->monedas=Moneda::all();
+        $this->partners=Partner::all();
     }
     public function updatedBuscarEmpresa($valor)
     {
@@ -124,11 +129,11 @@ class NuevaOportunidad extends Component
             'partner'=>'required',
             'producto'=>'required',
             'moneda'=>'required',
-            'horas_consultoria'=>'required',
-            'valor_propuesta'=>'required',
-            'costo_fabricante'=>'required',
-            'costo_consultoria'=>'required',
-            'margen_estimado'=>'required',
+            'horas_consultoria'=>'required|numeric',
+            'valor_propuesta'=>'required|numeric',
+            'costo_fabricante'=>'required|numeric',
+            'costo_consultoria'=>'required|numeric',
+            'margen_estimado'=>'required|numeric',
             'estimacion_cierre'=>'required',
             'dias_credito'=>'required',
             
@@ -174,6 +179,7 @@ class NuevaOportunidad extends Component
             'costo_fabricante'=>$this->costo_fabricante,
             'costo_consultoria'=>$this->costo_consultoria,
             'margen_estimado'=>$this->margen_estimado,
+            'porcentaje_margen'=>$this->porcentaje_margen,
             'estimacion_cierre'=>$this->estimacion_cierre,
             'dias_credito'=>$this->dias_credito,
         ]);
@@ -182,5 +188,35 @@ class NuevaOportunidad extends Component
         $this->resetErrorBag();
         $this->resetValidation();
         $this->reset();
+    }
+    private function actualizarMargen()
+    {
+        $ingreso=(is_numeric($this->valor_propuesta)?$this->valor_propuesta:0);
+        $costo=(is_numeric($this->costo_fabricante)?$this->costo_fabricante:0);
+        $costo_consultoria=(is_numeric($this->costo_consultoria)?$this->costo_consultoria:0);
+
+        $this->margen_estimado=$ingreso-$costo-$costo_consultoria;
+        $this->porcentaje_margen=0;
+
+        if($ingreso!=0)
+        {
+            $this->porcentaje_margen=$this->margen_estimado/$ingreso;
+        }
+        
+        //$valor_propuesta=0;
+        //$costo_fabricante=0;
+        //$costo_consultoria=0;
+    }
+    public function updatedValorPropuesta()
+    {
+        $this->actualizarMargen();
+    }
+    public function updatedCostoFabricante()
+    {
+        $this->actualizarMargen();
+    }
+    public function updatedCostoConsultoria()
+    {
+        $this->actualizarMargen();
     }
 }

@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Lead;
 use App\Models\BitacoraLead;
 use App\Models\TipoBitacoraLead;
+use App\Models\ConceptoGasto;
 use Illuminate\Support\Facades\Auth;
 
 class UpdateLead extends Component
@@ -32,6 +33,8 @@ class UpdateLead extends Component
 
     public $tipos=[];
 
+    public $concepto_gastos=[];
+
     public function render()
     {
         return view('livewire.lead.update-lead');
@@ -57,12 +60,13 @@ class UpdateLead extends Component
         $this->oportunidad=$this->lead->oportunidad;
         $this->partner=$this->lead->partner;
 
-        $this->bitacora_leads=BitacoraLead::with('tipo','ticket')
+        $this->bitacora_leads=BitacoraLead::with('tipo','ticket','c_gasto')
                                             ->where('lead_id',$this->lead_id)
                                             ->orderBy('id','desc')
                                             ->get();
 
         $this->tipos=TipoBitacoraLead::where('visible',1)->orderBy('id','asc')->get();
+        $this->concepto_gastos=ConceptoGasto::all();
         
         if(is_null($this->bitacora_leads)) $this->bitacora_leads=[];
     }
@@ -73,7 +77,7 @@ class UpdateLead extends Component
             'tipo'=>'',
             'detalles'=>'',
             'gasto'=>'0',
-            'concepto_gasto'=>'',
+            'concepto_gasto'=>'1',
             'due_date'=>'',
         ];
     }
@@ -96,7 +100,7 @@ class UpdateLead extends Component
             if($this->nuevas_bitacoras[$index]['gasto']>0)
             {
                 $reglas = array_merge($reglas, [
-                'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required',
+                'nuevas_bitacoras.'.$index.'.concepto_gasto' => 'required|numeric|min:2',
                 ]);
             }
           }
@@ -104,7 +108,8 @@ class UpdateLead extends Component
         $this->validate($reglas,
             [
                 'required' => 'Campo requerido.',
-                'numeric'=>'Debe ser un numero'
+                'numeric'=>'Debe ser un numero',
+                'min'=>'Seleccione una opcion valida'
             ],
           );
     }
@@ -125,7 +130,7 @@ class UpdateLead extends Component
             'tipo_id'=>$nueva['tipo'],
             'detalles'=>$nueva['detalles'],
             'gasto'=>$nueva['gasto'],
-            'concepto_gasto'=>$nueva['concepto_gasto'],
+            'concepto_gasto'=>$nueva['gasto']=='0'?1:$nueva['concepto_gasto'],
             'due_date'=>$nueva['due_date'],
             'ticket_id'=>$ticket_id,
             ]);

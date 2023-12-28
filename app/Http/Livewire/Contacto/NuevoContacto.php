@@ -43,7 +43,7 @@ class NuevoContacto extends Component
             'area'=>'required',
             'posicion'=>'required',
             'correo1'=>'required|email',
-            'telefono1'=>'required',
+            'telefono1'=>'required|numeric|digits:10',
           ];
         //dd($reglas);
         $this->validate($reglas,
@@ -51,7 +51,8 @@ class NuevoContacto extends Component
                 'required' => 'Campo requerido.',
                 'numeric'=>'Debe ser un numero',
                 'unique'=>'El valor ya existe en la base de datos',
-                'email'=>'Se requiere una direccion de correo valida'
+                'email'=>'Se requiere una direccion de correo valida',
+                'digits'=>'Debe contener 10 digitos'
             ],
           );
     }
@@ -62,7 +63,7 @@ class NuevoContacto extends Component
 
         ContactoProspecto::create([
             'prospecto_id'=>$this->prospecto_id,
-            'nombre'=>$this->nombre,
+            'nombre'=>strtoupper($this->nombre),
             'area'=>$this->area,
             'posicion'=>$this->posicion,
             'correo1'=>$this->correo1,

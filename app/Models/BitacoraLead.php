@@ -32,4 +32,8 @@ class BitacoraLead extends Model
     {
         return $this->belongsTo(Ticket::class,'ticket_id');
     }
+    public function c_gasto()
+    {
+        return $this->belongsTo(ConceptoGasto::class,'concepto_gasto');
+    }
 }

@@ -19,7 +19,7 @@
             <div class="flex flex-col w-full">
                 <div class="w-full mb-2 flex flex-row space-x-3">
                     <div class="w-1/2">
-                        <x-jet-label class="text-xl font-bold" value="{{$razon_social}}" />
+                        <x-jet-label class="text-xl font-bold" value="{!!$razon_social!!}" />
                     </div>
                     <div class="w-1/2 px-5">
                         <x-jet-label class="text-base font-bold" value="Contacto : {{$contacto}}" />
@@ -69,7 +69,7 @@
                                 <td class="px-2 py-1">{{$registro->tipo->nombre}}</td>
                                 <td class="px-2 py-1">{{$registro->detalles}}</td>
                                 <td class="px-2 py-1">${{number_format($registro->gasto,2)}}</td>
-                                <td class="px-2 py-1">{{$registro->concepto_gasto}}</td>
+                                <td class="px-2 py-1">{{$registro->c_gasto->nombre}}</td>
                                 <td class="px-2 py-1">{{$registro->due_date}}</td>
                                 <td class="px-2 py-1">
                                     @php
@@ -101,8 +101,17 @@
                         </table>
                     </div>  
                     <div class="w-full px-5 pt-3 flex flex-col">
+                    @php
+                        $nuevas=0;
+                    @endphp
+                    @foreach($nuevas_bitacoras as $index=>$bita)
+                        @php
+                            $nuevas=$nuevas+1;
+                        @endphp
+                    @endforeach
+
                         <div class="w-full pt-3 px-5 flex flex-row text-blue-500 text-base">
-                            Nuevas Bitacoras
+                            {{$nuevas>=1?'Nuevas Bitacoras':''}}
                         </div>
                         @foreach($nuevas_bitacoras as $index=>$bita)
                         <div class="w-full pt-3 px-5 flex flex-row space-x-2">
@@ -128,7 +137,14 @@
                             </div>
                             <div class="w-1/6 px-2">
                                 <x-jet-label value="Concepto Gasto" />
-                                <x-jet-input wire:model="nuevas_bitacoras.{{$index}}.concepto_gasto" class="border border-gray-300 w-full py-1 px-3 text-xs  focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm"/>
+                                <select wire:model="nuevas_bitacoras.{{$index}}.concepto_gasto" class="text-xs w-full py-1 px-3 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
+                                    <option value=""></option>
+                                    @foreach($concepto_gastos as $tipo_opcion)
+                                    <option value="{{$tipo_opcion->id}}">{{$tipo_opcion->nombre}}</option>
+                                    @endforeach
+                                </select>
+
+
                                 @error('nuevas_bitacoras.'.$index.'.concepto_gasto') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    
                             </div>
                             <div class="w-1/6 px-2">

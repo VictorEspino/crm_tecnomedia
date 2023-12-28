@@ -119,15 +119,9 @@
                         <span class="text-xs text-ttds">Partner/Fabricante</span><br>
                         <select wire:model="partner" class="w-full rounded p-1 border border-gray-300 bg-white"> 
                             <option value=""></option>
-                            <option value="Netscout Systems, Inc">Netscout Systems, Inc</option>
-                            <option value="Novell de México S.A. de C.V.">Novell de México S.A. de C.V.</option>
-                            <option value="Solace Corporation">Solace Corporation</option>
-                            <option value="AppDynamics, LLC">AppDynamics, LLC</option>
-                            <option value="Harness, Inc">Harness, Inc</option>
-                            <option value="Google, LLC">Google, LLC</option>
-                            <option value="Blazerunner, LLC">Blazerunner, LLC</option>
-                            <option value="Veracode, Inc">Veracode, Inc</option>
-                            <option value="Zscaler, Inc">Zscaler, Inc</option>
+                            @foreach ($partners as $part)
+                            <option value="{{$part->id}}">{{$part->nombre}}</option>    
+                            @endforeach
                         </select>
                         
                         @error('partner') <span class="text-xs text-red-400">{{ $message }}</span> @enderror    

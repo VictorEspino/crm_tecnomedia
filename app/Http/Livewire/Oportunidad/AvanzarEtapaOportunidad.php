@@ -71,7 +71,7 @@ class AvanzarEtapaOportunidad extends Component
         
         $this->opciones_avance=[];
 
-        if($this->etapa_actual<=7)
+        if($this->etapa_actual<5)
         {
             $siguiente=Etapaoportunidad::find($this->etapa_actual+1);
             $this->opciones_avance[]=[
@@ -80,19 +80,29 @@ class AvanzarEtapaOportunidad extends Component
                                         'mensaje'=>$siguiente->mensaje,
                                         'dias'=>$siguiente->dias,
                                     ];
+            if($this->etapa_actual==2) // Debe poder avanzar 2, tomando la POC como opcional
+                {                        
+                $siguiente=Etapaoportunidad::find($this->etapa_actual+2);
+                $this->opciones_avance[]=[
+                                            'id'=>$this->etapa_actual+2,
+                                            'nombre'=>$siguiente->nombre,
+                                            'mensaje'=>$siguiente->mensaje,
+                                            'dias'=>$siguiente->dias,
+                                        ];
+                }
         }
 
-        if($this->etapa_actual!=7)
+        if($this->etapa_actual>=1)
         {
             $this->opciones_avance[]=[
-                'id'=>8,
-                'nombre'=>'Cerrado ganado',
+                'id'=>6,
+                'nombre'=>'Cerrado Ganado',
                 'mensaje'=>'Esta estatus indica que el prospecto CALIFICA para ser cliente de TecnoMedia con esta ruta de contacto, se procede al seguimiento en el modulo de proyectos para su implementacion.',
                 'dias'=>0,
             ];
             $this->opciones_avance[]=[
-                'id'=>9,
-                'nombre'=>'Cerrado perdido',
+                'id'=>7,
+                'nombre'=>'Cerrado Perdido',
                 'mensaje'=>'Esta estatus indica que el prospecto no acepta la propuesta de solucion de Tecnomedia y sus parametros financieros',
                 'dias'=>0,
             ];
@@ -111,11 +121,11 @@ class AvanzarEtapaOportunidad extends Component
                 $this->mensaje_avance=$opcion['mensaje'];
                 $this->dias_avance=$opcion['dias'];
                 $this->avance_nombre=$opcion['nombre'];
-                if($this->avanzar_a!=8 && $this->avanzar_a!=9 && $this->avanzar_a!='')
+                if($this->avanzar_a!=6 && $this->avanzar_a!=7 && $this->avanzar_a!='')
                     $this->dias_dd="A partir de esta fecha tendras ".$this->dias_avance." dias para concluir esta accion.";
-                    if($this->avanzar_a==8)
+                    if($this->avanzar_a==6)
                     $this->dias_dd="Esto dara la oportunidad por GANADA y se comenzara el seguimiento en el modulo de proyectos";
-                if($this->avanzar_a==9)
+                if($this->avanzar_a==7)
                     $this->dias_dd="Esto eliminara el oportunidad de la tabla de seguimiento y lo dara por cerrado";
             }
         }
@@ -151,7 +161,7 @@ class AvanzarEtapaOportunidad extends Component
             'tipo_id'=>4,
             'detalles'=>'Avanza a etapa: '.$this->avance_nombre,
             'gasto'=>0,
-            'concepto_gasto'=>'',
+            'concepto_gasto'=>'1',
             'due_date'=>$fecha_nueva_formateada,
             ]);
 
@@ -161,7 +171,8 @@ class AvanzarEtapaOportunidad extends Component
                 'due_date_etapa'=>$fecha_nueva_formateada
             ]);
  
-        $this->emit('alert_ok','La etapa del oportunidad se actualizo satisfactoriamente');
+        $this->emit('alert_ok','La etapa de la oportunidad se actualizo satisfactoriamente');
+        $this->emit('actualiza_fuente');
         $this->resetErrorBag();
         $this->resetValidation();
         $this->resetExcept('oportunidad_id','desc_etapa_actual');

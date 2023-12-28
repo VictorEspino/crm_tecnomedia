@@ -26,6 +26,7 @@ class Oportunidad extends Model
             'costo_fabricante',
             'costo_consultoria',
             'margen_estimado',
+            'porcentaje_margen',
             'estimacion_cierre',
             'dias_credito',
             'comentarios',
@@ -64,5 +65,9 @@ class Oportunidad extends Model
     public function user()
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+    public function part()
+    {
+        return $this->belongsTo(Partner::class,'partner');
     }
 }

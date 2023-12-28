@@ -11,6 +11,7 @@ use App\Models\FuenteLead;
 use App\Models\Lead;
 use App\Models\Compania;
 use App\Models\EtapaLead;
+use App\Models\Partner;
 use Illuminate\Support\Facades\Auth;
 
 class NuevoLead extends Component
@@ -47,6 +48,8 @@ class NuevoLead extends Component
 
     public $procesando=0;
 
+    public $partners=[];
+
     protected $listeners = ['prospectoAgregado' => 'carga_nuevo_prospecto','contactoAgregado'=>'carga_nuevo_contacto'];
 
     public function render()
@@ -73,6 +76,7 @@ class NuevoLead extends Component
         $this->lineas_negocio=LineaNegocio::all();
         $this->servicios=Servicio::all();
         $this->fuentes=FuenteLead::all();
+        $this->partners=Partner::all();
     }
     public function updatedBuscarEmpresa($valor)
     {

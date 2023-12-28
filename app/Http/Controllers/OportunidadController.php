@@ -8,6 +8,8 @@ use App\Models\Prospecto;
 use App\Models\LineaNegocio;
 use App\Models\Servicio;
 use App\Models\Compania;
+use App\Models\Partner;
+use App\Models\EtapaOportunidad;
 use Illuminate\Support\Facades\Auth;
 
 class OportunidadController extends Controller
@@ -25,6 +27,8 @@ class OportunidadController extends Controller
         $linea=0;
         $servicio=0;
         $compañia=0;
+        $etapa=0;
+        $partner=0;
 
 
         if(isset($_GET['filtro']))
@@ -38,11 +42,21 @@ class OportunidadController extends Controller
             $prospecto=$_GET["prospecto"];
             $servicio=$_GET["servicio"];
             $compañia=$_GET["compañia"];
+            $etapa=$_GET["etapa"];
+            $partner=$_GET["partner"];
         }
         if($excel=="NO")
         {
-        $registros=Oportunidad::with('user','prospecto','contacto','linea_negocio','servicio','etapa','compania','moneda')
+        $registros=Oportunidad::with('user','prospecto','contacto','linea_negocio','servicio','etapa','compania','moneda','part')
                         ->orderBy('created_at','desc')
+                        ->when ($partner>0,function ($query) use ($partner)
+                        {
+                            $query->where('partner',$partner);
+                        })
+                        ->when ($etapa>0,function ($query) use ($etapa)
+                        {
+                            $query->where('etapa_id',$etapa);
+                        })
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {
                             $query->where('prospecto_id',$prospecto);
@@ -89,8 +103,16 @@ class OportunidadController extends Controller
         }    
         else
         {
-            $registros=Oportunidad::with('user','prospecto','contacto','linea_negocio','servicio','etapa','compania','moneda')
+            $registros=Oportunidad::with('user','prospecto','contacto','linea_negocio','servicio','etapa','compania','moneda','part')
                         ->orderBy('created_at','desc')
+                        ->when ($partner>0,function ($query) use ($partner)
+                        {
+                            $query->where('partner',$partner);
+                        })
+                        ->when ($etapa>0,function ($query) use ($etapa)
+                        {
+                            $query->where('etapa_id',$etapa);
+                        })
                         ->when ($prospecto>0,function ($query) use ($prospecto)
                         {
                             $query->where('prospecto_id',$prospecto);
@@ -147,13 +169,17 @@ class OportunidadController extends Controller
                     'servicio'=>$servicio,
                     'linea'=>$linea,
                     'prospecto'=>$prospecto,
-                    'compañia'=>$compañia
+                    'compañia'=>$compañia,
+                    'etapa'=>$etapa,
+                    'partner'=>$partner,
                     ]);   
         }      
         $prospectos=Prospecto::orderBy('razon_social','ASC')->get(); 
         $lineas=LineaNegocio::all();  
         $servicios=Servicio::all();  
-        $compañias=Compania::orderBy('nombre','ASC')->get();      
+        $compañias=Compania::orderBy('nombre','ASC')->get();    
+        $etapas=EtapaOportunidad::all();      
+        $partners=Partner::all(); 
 
         return(view($excel=="NO"?'oportunidades.base_oportunidades':'oportunidades.export',[
                                     'registros'=>$registros,
@@ -168,6 +194,11 @@ class OportunidadController extends Controller
                                     'linea'=>$linea,
                                     'lineas'=>$lineas,
                                     'prospecto'=>$prospecto,
-                                    'prospectos'=>$prospectos]));
+                                    'prospectos'=>$prospectos,
+                                    'etapa'=>$etapa,
+                                    'etapas'=>$etapas,
+                                    'partner'=>$partner,
+                                    'partners'=>$partners,
+                                ]));
     }
 }

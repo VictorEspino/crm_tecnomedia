@@ -143,7 +143,7 @@ class AvanzarEtapaLead extends Component
             'tipo_id'=>4,
             'detalles'=>'Avanza a etapa: '.$this->avance_nombre,
             'gasto'=>0,
-            'concepto_gasto'=>'',
+            'concepto_gasto'=>'1',
             'due_date'=>$fecha_nueva_formateada,
             ]);
 
@@ -154,6 +154,7 @@ class AvanzarEtapaLead extends Component
             ]);
  
         $this->emit('alert_ok','La etapa del lead se actualizo satisfactoriamente');
+        $this->emit('actualiza_fuente');
         $this->resetErrorBag();
         $this->resetValidation();
         $this->resetExcept('lead_id','desc_etapa_actual');

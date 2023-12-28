@@ -54,6 +54,24 @@
                             @endforeach
                         </select>  
                     </div>
+                    <div class="w-1/6">
+                        <x-jet-label class="text-white text-sm">Partner</x-jet-label>
+                        <select class="text-xs w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm py-1" name="partner">
+                            <option value="" class=""></option>
+                            @foreach($partners as $parts)
+                            <option value="{{$parts->id}}" class="" {{$partner==$parts->id?'selected':''}}>{{$parts->nombre}}</option>
+                            @endforeach
+                        </select>  
+                    </div>
+                    <div class="w-1/6">
+                        <x-jet-label class="text-white text-sm">Etapa</x-jet-label>
+                        <select class="text-xs w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm py-1" name="etapa">
+                            <option value="" class=""></option>
+                            @foreach($etapas as $etap)
+                            <option value="{{$etap->id}}" class="" {{$etapa==$etap->id?'selected':''}}>{{$etap->nombre}}</option>
+                            @endforeach
+                        </select>  
+                    </div>
 
                     <div class="w-1/6">
                         <x-jet-label class="text-white text-sm">Desde:</x-jet-label>
@@ -115,9 +133,17 @@
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->servicio->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->oportunidad}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs font-bold">{{$oportunidad->prospecto->razon_social}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->partner}}</td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->part->nombre}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->producto}}</td>
-                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->etapa->nombre}}</td>
+                        @php
+                        $fechaActual = date('Y-m-d'); 
+                        $datetime2 = date_create($oportunidad->due_date_etapa);
+                        $datetime1 = date_create($fechaActual);
+                        $contador = date_diff($datetime1, $datetime2);
+                        $differenceFormat = '%r%a';
+                        $disponibles=$contador->format($differenceFormat);
+                        @endphp
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->etapa->nombre}}<br><span class="font-bold {{$disponibles>=0?'text-green-500':'text-red-500'}}">{{$disponibles>=0?$disponibles:-1*$disponibles}} dias {{$disponibles>=0?'vigentes':'atrasados'}}</span></td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->contacto->nombre}}</td>
                         <td nowrap class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{$oportunidad->created_at}}</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
@@ -127,7 +153,7 @@
                         @livewire('oportunidad.avanzar-etapa-oportunidad',['oportunidad_id'=>$oportunidad->id,key($oportunidad->id)])
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
-                            @if($oportunidad->etapa_id=="4") 
+                            @if($oportunidad->etapa_id=="2" || $oportunidad->etapa_id=="3" || $oportunidad->etapa_id=="4" || $oportunidad->etapa_id=="5") 
                             <a href="{{route('cotizaciones',['id_oportunidad'=>$oportunidad->id])}}">
                                 <i class="fas fa-dollar-sign text-xl text-red-400"></i>
                             </a>

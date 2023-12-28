@@ -3,7 +3,7 @@
 
     <x-jet-dialog-modal wire:model="open" maxWidth="5xl">
         <x-slot name="title">
-            Crear nuevo contacto {{$prospecto_id}}
+            Crear nuevo contacto
         </x-slot>
         <x-slot name="content">
             <div class="flex flex-col w-full">
