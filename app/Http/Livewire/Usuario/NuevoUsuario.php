@@ -85,7 +85,7 @@ class NuevoUsuario extends Component
                 'numeric'=>'Debe ser un numero',
                 'unique'=>'El valor ya existe en la base de datos',
                 'email'=>'Se requiere una direccion de correo valida'
-            ],
+            ]
           );
     }
     public function guardar()
@@ -101,7 +101,7 @@ class NuevoUsuario extends Component
             'email'=>$this->email,
             'area'=>$this->area,
             'sub_area'=>$this->sub_area,
-            'password'=>'$2y$10$l3Ie3V7nvjxar33TlexunOeoP.0t9EnvwvyEDkCk1sIdjKjoO1oRK',
+            'password'=>'$2y$10$nK/ZCp9pnpgEBKW.BmdXF.4z660oLuWUan0v7YCsmrHQdrf7sNHQK',
         ]);
 
 

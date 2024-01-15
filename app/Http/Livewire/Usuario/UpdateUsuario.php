@@ -129,7 +129,7 @@ class UpdateUsuario extends Component
                 'numeric'=>'Debe ser un numero',
                 'unique'=>'El valor ya existe en la base de datos',
                 'email'=>'Se requiere una direccion de correo valida'
-            ],
+            ]
           );
     }
     public function cambiar_estatus()
@@ -148,7 +148,7 @@ class UpdateUsuario extends Component
     public function reset_password()
     {
         User::where('id',$this->id_user)
-            ->update(['password'=>'$2y$10$l3Ie3V7nvjxar33TlexunOeoP.0t9EnvwvyEDkCk1sIdjKjoO1oRK']);
+            ->update(['password'=>'$2y$10$nK/ZCp9pnpgEBKW.BmdXF.4z660oLuWUan0v7YCsmrHQdrf7sNHQK']);
         $this->open=false;
         $this->emit('usuarioModificado');
     }
