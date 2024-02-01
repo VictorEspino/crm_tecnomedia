@@ -35,19 +35,23 @@
                 <div class="w-full flex justify-center">
                 <table>
                     <tr class="">
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center></td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Folio</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Razon Social</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>RFC</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Inicio de Operaciones</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Estatus</td>
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=3></td>
-                        
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2><center>Info</td>
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2><center>Proyecto</td>                   
                     </tr>
                     @php
                         $color=true;
                     @endphp
                     @foreach($registros as $registro)
                     <tr class="">
+                        <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">
+                            @livewire('documentos.documentos-cliente',['id_prospecto'=>$registro->id,'prospecto'=>$registro->razon_social,'key'=>20000+$registro->id])              
+                        </td>
                         <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">{{folio($registro->id)}}</td>
                         <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">{{$registro->razon_social}}</td>
                         <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">{{$registro->rfc}}</td>
@@ -60,6 +64,9 @@
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">
                             @livewire('principal.lista-contactos',['id_prospecto'=>$registro->id,'key'=>1000+$registro->id])              
+                        </td>
+                        <td class="border border-gray-300 font-light {{$color?'':'bg-lime-100'}} text-gray-700 p-1 text-xs">
+                            @livewire('proyecto.nuevo-proyecto',['id_prospecto'=>$registro->id,'prospecto'=>$registro->razon_social,'key'=>10000+$registro->id])              
                         </td>
                     </tr>
                     @php

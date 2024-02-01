@@ -1,5 +1,8 @@
 <?php
-
+function pad_0($id,$len)
+{
+    return(''.str_pad($id,$len,'0',STR_PAD_LEFT));
+}
 function folio($id)
 {
     return('#'.str_pad($id,10,'0',STR_PAD_LEFT));
@@ -64,4 +67,10 @@ function show_transcurrido($minutos)
     }
     $respuesta=$respuesta.''.$minutos_restantes.'m';
     return($respuesta);
+}
+function ruta_archivos()
+{
+    $ruta = public_path('archivos');
+    //$ruta ='/home/icubeitc/konecta.icube-it.com/archivos';
+    return($ruta);
 }

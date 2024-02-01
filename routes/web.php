@@ -20,6 +20,8 @@ use App\Http\Livewire\Ticket\AvisoAtraso;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ProyectoController;
+use App\Http\Controllers\DocumentosController;
 
 
 /*
@@ -83,3 +85,9 @@ Route::get('ticket_impresion/{id}',[TicketController::class,'impresion'])->name(
 
 
 Route::get('/principal',[MainController::class,'base_principal'])->name('principal')->middleware('auth');
+
+##PROYECTOS
+Route::get('/base_proyectos',[ProyectoController::class,'base_proyectos'])->middleware('auth')->name('base_proyectos');
+
+Route::post('/nuevo_doc_cliente',[DocumentosController::class,'nuevo_doc_cliente'])->middleware('auth')->name('nuevo_doc_cliente');
+Route::post('/nuevo_doc_proyecto',[DocumentosController::class,'nuevo_doc_proyecto'])->middleware('auth')->name('nuevo_doc_proyecto');

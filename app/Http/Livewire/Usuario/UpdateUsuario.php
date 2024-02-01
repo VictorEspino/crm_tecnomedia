@@ -148,7 +148,7 @@ class UpdateUsuario extends Component
     public function reset_password()
     {
         User::where('id',$this->id_user)
-            ->update(['password'=>'$2y$10$nK/ZCp9pnpgEBKW.BmdXF.4z660oLuWUan0v7YCsmrHQdrf7sNHQK']);
+            ->update(['password'=>'$2y$10$b7rWDCXBPMYxL2wwCImoA.OqTa/mf6dA4dUiJ4adRD8vRb51ExFPO']);
         $this->open=false;
         $this->emit('usuarioModificado');
     }

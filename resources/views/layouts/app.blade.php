@@ -120,7 +120,16 @@
                                         <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
                                         Principal
                                     </a>
-                                </div>        
+                                </div>
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('base_proyectos')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Seguimiento de proyectos
+                                    </a>
+                                </div>     
+
+
+
                              </div>
                              <div class="text pt-3">
                                 <i class="fas fa-tasks"></i>
