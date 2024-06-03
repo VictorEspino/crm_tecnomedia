@@ -38,7 +38,7 @@
                 </div>
                 <div class="w-full mb-2 flex flex-row space-x-3 pb-3">
                     <div class="w-3/4">
-                        <x-jet-label value="Terminos pago" />
+                        <x-jet-label value="Terminos pago (dias de credito)" />
                         <x-jet-input class="w-full text-sm" type="text"  wire:model.defer="terminos_pago"/>
                         @error('terminos_pago') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>

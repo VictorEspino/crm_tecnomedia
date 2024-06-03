@@ -23,6 +23,10 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\DocumentosController;
 
+use App\Http\Livewire\Finanzas\RegistroMovimientos;
+use App\Http\Livewire\Finanzas\CCGeneral;
+use App\Http\Livewire\Finanzas\CPGeneral;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -91,3 +95,9 @@ Route::get('/base_proyectos',[ProyectoController::class,'base_proyectos'])->midd
 
 Route::post('/nuevo_doc_cliente',[DocumentosController::class,'nuevo_doc_cliente'])->middleware('auth')->name('nuevo_doc_cliente');
 Route::post('/nuevo_doc_proyecto',[DocumentosController::class,'nuevo_doc_proyecto'])->middleware('auth')->name('nuevo_doc_proyecto');
+
+/* FINANZAS */
+
+Route::get('/finanzas_registros/{id_proyecto}',RegistroMovimientos::class)->name('finanzas_registros')->middleware('auth');
+Route::get('/cc_general',CCGeneral::class)->name('cc_general')->middleware('auth');
+Route::get('/cp_general',CPGeneral::class)->name('cp_general')->middleware('auth');

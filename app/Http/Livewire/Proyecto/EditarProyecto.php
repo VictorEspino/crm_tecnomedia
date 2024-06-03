@@ -9,6 +9,8 @@ use App\Models\TipoProyecto;
 use App\Models\Proyecto;
 use App\Models\BitacoraPresupuestoProyecto;
 use Illuminate\Support\Facades\Auth;
+use App\Models\ProyectoLicenciaSeccion;
+use App\Models\ProyectoLicenciaSeccionItem;
 
 class EditarProyecto extends Component
 {
@@ -36,6 +38,10 @@ class EditarProyecto extends Component
     public $estatus;
 
     public $bitacoras=[];
+
+    public $partners=[];
+    public $secciones=[];
+    public $items_guardados=[];
 
     public function render()
     {
@@ -70,6 +76,11 @@ class EditarProyecto extends Component
         $this->horas_originales=$proyecto_actual->presupuesto;
 
         $this->bitacoras=BitacoraPresupuestoProyecto::with('usuario')->where('id_proyecto',$this->id_proyecto)->get();
+
+        $this->secciones=ProyectoLicenciaSeccion::where('id_proyecto',$this->id_proyecto)->get();
+        $secciones_guardadas=$this->secciones->pluck('id');
+        
+        $this->items_guardados=ProyectoLicenciaSeccionItem::with('mayorista')->whereIn('seccion_id',$secciones_guardadas)->get();
     }
 
     public function cancelar()

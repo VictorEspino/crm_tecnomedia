@@ -72,5 +72,6 @@ function ruta_archivos()
 {
     $ruta = public_path('archivos');
     //$ruta ='/home/icubeitc/konecta.icube-it.com/archivos';
+    //$ruta ='/home/icubeitc/test-konecta.icube-it.com/archivos';
     return($ruta);
 }

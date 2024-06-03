@@ -21,6 +21,7 @@
                         <x-jet-label value="Tipo" />
                         <select wire:model.defer="tipo" name="tipo" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">    
                             <option value=""></option>
+                            <option value="SITUACION_FISCAL">SITUACION FISCAL</option>
                             <option value="NDA">NDA</option>
                             <option value="CONTRATO_MARCO">CONTRATO MARCO</option>
                         </select>

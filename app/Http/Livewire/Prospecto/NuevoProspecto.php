@@ -51,7 +51,7 @@ class NuevoProspecto extends Component
             'regimen'=>'required',
             'razon_social'=>'required',
             'fecha_io'=>'required',
-            'terminos_pago'=>'required',
+            'terminos_pago'=>'required|numeric|min:0',
             'calle'=>'required',
             'colonia'=>'required',
             'num_ext'=>'required',
@@ -67,7 +67,8 @@ class NuevoProspecto extends Component
                 'numeric'=>'Debe ser un numero',
                 'unique'=>'El valor ya existe en la base de datos',
                 'email'=>'Se requiere una direccion de correo valida',
-                'digits'=>'Debe constar de 5 digitos'
+                'digits'=>'Debe constar de 5 digitos',
+                'min'=>'Indique un numero valido'
             ],
           );
     }

@@ -62,6 +62,7 @@
                             </select>
                         @error('responsable') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
+                    @if($tipo_proyecto!=2)
                     <div class="w-full pt-2">
                         <x-jet-label value="Presupuesto (horas)" />
                         <x-jet-input class="w-full text-xs" wire:model.defer="presupuesto" type="text" />
@@ -99,6 +100,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                     <div class="w-full pt-2">
                         <x-jet-label value="Estatus" />
                         <select wire:model.defer="estatus" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
@@ -135,6 +137,44 @@
                     </div>
                 </div>
             </div>
+            @if($tipo_proyecto==2)
+            <div class="text-xl font-bold w-full">Licenciamiento</div>
+            <div class="w-full flex flex-col">
+                @foreach($secciones as $seccion)
+                    <div class="w-full flex flex-row space-x-3 text-sm font-bold bg-gray-700 text-white">
+                        <div class="w-1/2 px-1">{{$seccion->nombre}}</div>
+                        <div class="w-1/4 px-1">Inicio Vigencia: {{$seccion->f_inicio}}</div>
+                        <div class="w-1/4 px-1">Fin Vigencia: {{$seccion->f_inicio}}</div>
+                    </div>
+                    <div class="w-full flex flex-row space-x-3 text-xs font-bold bg-gray-300 text-gray-700">
+                        <div class="w-1/12 px-1">Tipo</div>
+                        <div class="w-3/12 px-1">Descripcion</div>
+                        <div class="w-2/12 px-1">Mayorista</div>
+                        <div class="w-1/12 px-1">Cantidad</div>
+                        <div class="w-1/12 px-1">Unitario Cliente</div>
+                        <div class="w-1/12 px-1">Total Cliente</div>
+                        <div class="w-1/12 px-1">Unitario Tecnomedia</div>
+                        <div class="w-1/12 px-1">Total Tecnomedia</div>
+                        <div class="w-1/12 px-1">Margen</div>
+                    </div>
+                    @foreach($items_guardados as $item_despliegue)
+                        @if($item_despliegue->seccion_id==$seccion->id)
+                        <div class="w-full flex flex-row space-x-3 text-xs font-bold bg-white text-gray-700">
+                            <div class="w-1/12 px-1 py-1">{{$item_despliegue->tipo}}</div>
+                            <div class="w-3/12 px-1 py-1">{{$item_despliegue->descripcion}}</div>
+                            <div class="w-2/12 px-1 py-1">{{$item_despliegue->mayorista->nombre}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">{{$item_despliegue->cantidad}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_cliente,2)}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_cliente,2)}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_tecnomedia,2)}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_tecnomedia,2)}}</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->margen,2)}} ({{100*$item_despliegue->porcentaje_margen}}%)</div>
+                        </div>
+                        @endif
+                    @endforeach
+                @endforeach
+            </div>
+            @endif
         </x-slot>
         <x-slot name="footer">
             <x-jet-secondary-button wire:click="cancelar">CANCELAR</x-jet-secondary-button>&nbsp;&nbsp;

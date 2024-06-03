@@ -89,7 +89,7 @@
                 <div class="w-full flex justify-center">
                 <table>
                     <tr class="">
-                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=2></td>
+                        <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm" colspan=3></td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Clave Proyecto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Prospecto</td>
                         <td class="border border-gray-300 font-semibold bg-slate-600 text-gray-200 p-1 text-sm"><center>Nombre</td>
@@ -114,6 +114,11 @@
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
                             @livewire('documentos.documentos-proyecto',['id_proyecto'=>$reg->id,'prospecto'=>$reg->prospecto->razon_social,'nombre'=>$reg->nombre,'key'=>5600+$reg->id])
+                        </td>
+                        <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
+                            <a href="{{route('finanzas_registros',['id_proyecto'=>$reg->id])}}">
+                                <i class="text-blue-400 fas fa-money-check-alt" style="cursor: pointer;"></i>
+                            </a>
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">{{pad_0($reg->id,3)}}/{{pad_0($reg->id_negocio,3)}}/0001</td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs font-bold">{{$reg->prospecto->razon_social}}</td>

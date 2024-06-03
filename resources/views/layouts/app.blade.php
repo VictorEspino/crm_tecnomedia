@@ -133,6 +133,30 @@
                              </div>
                              <div class="text pt-3">
                                 <i class="fas fa-tasks"></i>
+                                Finanzas
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('cp_general')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Cuentas por pagar
+                                    </a>
+                                </div>
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('cc_general')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Cuentas por cobrar
+                                    </a>
+                                </div>
+                                <div class="pl-5 pt-2 text-lime-300">
+                                    <a href="{{route('principal')}}">
+                                        <span class="text-gray-200"><i class="fas fa-user-tie"></i></span>
+                                        Balances
+                                    </a>
+                                </div>
+                             </div>
+                             <div class="text pt-3">
+                                <i class="fas fa-tasks"></i>
                                 Leads
                             </div>
                             <div class="flex flex-col">
