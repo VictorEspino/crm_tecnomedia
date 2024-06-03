@@ -22,6 +22,7 @@ use App\Http\Controllers\BusquedaController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\DocumentosController;
+use App\Http\Controllers\ReportesController;
 
 use App\Http\Livewire\Finanzas\RegistroMovimientos;
 use App\Http\Livewire\Finanzas\CCGeneral;

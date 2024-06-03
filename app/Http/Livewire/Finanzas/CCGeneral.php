@@ -3,7 +3,7 @@
 namespace App\Http\Livewire\Finanzas;
 
 use Livewire\Component;
-use App\Models\ProyectoDocumentoFinanzas;
+use App\Models\ProyectoDocumentoFinanzasFacturaCliente;
 
 class CCGeneral extends Component
 {
@@ -16,17 +16,9 @@ class CCGeneral extends Component
     }
     public function mount()
     {
-        $this->facturas_vencidas=ProyectoDocumentoFinanzas::whereRaw('fecha_vencimiento<=now()')
-                                                            ->where('etiqueta','FACTURA')
-                                                            ->where('universo','CC')
+        $this->facturas_vencidas=ProyectoDocumentoFinanzasFacturaCliente::with('moneda_documento')->whereRaw('fecha_vencimiento<=now()')                                                    
                                                             ->get();
-        $this->facturas_vigentes=ProyectoDocumentoFinanzas::whereRaw('fecha_vencimiento>now()')
-                                                            ->where('etiqueta','FACTURA')
-                                                            ->where('universo','CC')
+        $this->facturas_vigentes=ProyectoDocumentoFinanzasFacturaCliente::with('moneda_documento')->whereRaw('fecha_vencimiento>now()')
                                                             ->get();        
-        $this->pagos=ProyectoDocumentoFinanzas::whereRaw('fecha_vencimiento>now()')
-                                                            ->where('etiqueta','!=','FACTURA')
-                                                            ->where('universo','CC')
-                                                            ->get();
     }
 }
