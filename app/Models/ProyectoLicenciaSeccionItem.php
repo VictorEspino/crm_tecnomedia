@@ -13,11 +13,10 @@ class ProyectoLicenciaSeccionItem extends Model
                          'tipo',
                          'descripcion',
                          'cantidad',
-                         'unitario_cliente',
                          'total_cliente',
-                         'unitario_tecnomedia',
                          'total_tecnomedia',
                          'partner_id',
+                         'fabricante_id',
                          'margen',
                          'porcentaje_margen',
                         ];
@@ -25,5 +24,9 @@ class ProyectoLicenciaSeccionItem extends Model
     public function mayorista()
     {
         return $this->belongsTo(Partner::class,'partner_id');
+    }
+    public function fabricante()
+    {
+        return $this->belongsTo(Fabricante::class,'fabricante_id');
     }
 }

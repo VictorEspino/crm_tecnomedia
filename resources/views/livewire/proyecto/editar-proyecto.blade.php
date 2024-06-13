@@ -144,16 +144,16 @@
                     <div class="w-full flex flex-row space-x-3 text-sm font-bold bg-gray-700 text-white">
                         <div class="w-1/2 px-1">{{$seccion->nombre}}</div>
                         <div class="w-1/4 px-1">Inicio Vigencia: {{$seccion->f_inicio}}</div>
-                        <div class="w-1/4 px-1">Fin Vigencia: {{$seccion->f_inicio}}</div>
+                        <div class="w-1/4 px-1">Fin Vigencia: {{$seccion->f_fin}}</div>
                     </div>
                     <div class="w-full flex flex-row space-x-3 text-xs font-bold bg-gray-300 text-gray-700">
                         <div class="w-1/12 px-1">Tipo</div>
                         <div class="w-3/12 px-1">Descripcion</div>
                         <div class="w-2/12 px-1">Mayorista</div>
                         <div class="w-1/12 px-1">Cantidad</div>
-                        <div class="w-1/12 px-1">Unitario Cliente</div>
+                        
                         <div class="w-1/12 px-1">Total Cliente</div>
-                        <div class="w-1/12 px-1">Unitario Tecnomedia</div>
+                        
                         <div class="w-1/12 px-1">Total Tecnomedia</div>
                         <div class="w-1/12 px-1">Margen</div>
                     </div>
@@ -164,11 +164,11 @@
                             <div class="w-3/12 px-1 py-1">{{$item_despliegue->descripcion}}</div>
                             <div class="w-2/12 px-1 py-1">{{$item_despliegue->mayorista->nombre}}</div>
                             <div class="w-1/12 px-1 py-1 flex justify-center">{{$item_despliegue->cantidad}}</div>
-                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_cliente,2)}}</div>
-                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_cliente,2)}}</div>
-                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_tecnomedia,2)}}</div>
-                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_tecnomedia,2)}}</div>
-                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->margen,2)}} ({{100*$item_despliegue->porcentaje_margen}}%)</div>
+                            
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_cliente,2)}} ({{$seccion->i_tc>1?'USD':'MXP'}})</div>
+                            
+                            <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_tecnomedia,2)}} ({{$seccion->c_tc>1?'USD':'MXP'}})</div>
+                            <div class="w-1/12 px-1 py-1 flex justify-center">{{100*$item_despliegue->porcentaje_margen}}%</div>
                         </div>
                         @endif
                     @endforeach

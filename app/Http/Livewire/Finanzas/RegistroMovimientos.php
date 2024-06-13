@@ -83,7 +83,7 @@ class RegistroMovimientos extends Component
         $this->documentos=ProyectoDocumentoFinanzasFacturaCliente::with('moneda_documento')->where('proyecto_id',$this->id_proyecto)->get();
         $this->documentos_proveedor=ProyectoDocumentoFinanzasFacturaProveedor::with('moneda_documento')->where('proyecto_id',$this->id_proyecto)->get();
     }
-    public function agregar_documento_cliente($seccion)
+    public function agregar_documento_cliente($seccion,$tc)
     {
         $this->open_cliente=true;
         $this->seccion_a_registrar=$seccion;
@@ -97,9 +97,19 @@ class RegistroMovimientos extends Component
         $this->folio_documento="";
         $this->cuenta_contable=null;
         $this->orden_compra=null;
-        $this->moneda_documento=null;
         $this->tipo_cambio_documento=null;
-        
+        if($tc==1)
+        {
+            $this->moneda_documento=1;
+            $this->solicitar_tc=false;
+            $this->tipo_cambio_documento=1;
+        }
+        if($tc>1)
+        {
+            $this->moneda_documento=2;
+            $this->solicitar_tc=true;
+            $this->tipo_cambio_documento=0;
+         }        
     }
     public function agregar_documento_proveedor($seccion)
     {

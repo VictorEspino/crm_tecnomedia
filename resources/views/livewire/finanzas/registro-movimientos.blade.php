@@ -27,9 +27,9 @@
             <div class="w-3/12 px-1">Descripcion</div>
             <div class="w-2/12 px-1">Mayorista</div>
             <div class="w-1/12 px-1">Cantidad</div>
-            <div class="w-1/12 px-1">Unitario Cliente</div>
+            
             <div class="w-1/12 px-1">Total Cliente</div>
-            <div class="w-1/12 px-1">Unitario Tecnomedia</div>
+            
             <div class="w-1/12 px-1">Total Tecnomedia</div>
             <div class="w-1/12 px-1">Margen</div>
         </div>
@@ -40,18 +40,18 @@
                 <div class="w-3/12 px-1 py-1">{{$item_despliegue->descripcion}}</div>
                 <div class="w-2/12 px-1 py-1">{{$item_despliegue->mayorista->nombre}}</div>
                 <div class="w-1/12 px-1 py-1 flex justify-center">{{$item_despliegue->cantidad}}</div>
-                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_cliente,2)}}</div>
-                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_cliente,2)}}</div>
-                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->unitario_tecnomedia,2)}}</div>
-                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_tecnomedia,2)}}</div>
-                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->margen,2)}} ({{100*$item_despliegue->porcentaje_margen}}%)</div>
+                
+                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_cliente,2)}} ({{$seccion->i_tc>1?'USD':'MXP'}})</div>
+                
+                <div class="w-1/12 px-1 py-1 flex justify-center">${{number_format($item_despliegue->total_tecnomedia,2)}} ({{$seccion->c_tc>1?'USD':'MXP'}})</div>
+                <div class="w-1/12 px-1 py-1 flex justify-center">{{100*$item_despliegue->porcentaje_margen}}%</div>
             </div>
             @endif
         @endforeach
         <div class="w-full px-6 pt-1 flex flex-row">
             <div class="w-1/2 flex justify-center items-center px-3 font-bold text-green-700">
                 Registrar Factura por Cobrar&nbsp;&nbsp;
-                <i class="text-green-400 fas fa-money-check-alt" wire:click='agregar_documento_cliente({{$seccion->id}})' style="cursor: pointer;"></i>
+                <i class="text-green-400 fas fa-money-check-alt" wire:click='agregar_documento_cliente({{$seccion->id}},{{$seccion->i_tc}})' style="cursor: pointer;"></i>
             </div>
             <div class="w-1/2 flex justify-center items-center px-3 font-bold text-red-500">
                 Registrar Factura por Pagar&nbsp;&nbsp;
@@ -182,9 +182,9 @@
                     <div class="w-1/2">
                         <x-jet-label value="Moneda" />
                         <select wire:model="moneda_documento" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                            <option value=""></option>
+                            <option value="" disabled></option>
                             @foreach($monedas as $opcion)
-                            <option value="{{$opcion->id}}">{{$opcion->nombre}}</option>
+                            <option value="{{$opcion->id}}" disabled>{{$opcion->nombre}}</option>
                             @endforeach
                         </select>
                         @error('moneda_documento') <span class="text-xs text-red-400">{{ $message }}</span> @enderror

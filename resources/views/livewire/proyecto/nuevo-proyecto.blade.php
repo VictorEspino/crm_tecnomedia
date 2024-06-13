@@ -10,7 +10,7 @@
 
     <x-jet-dialog-modal wire:model="open" maxWidth="7xl">
         <x-slot name="title">
-            Nuevo proyecto
+            Nuevo proyecto {{$actualizado}}
         </x-slot>
         <x-slot name="content">
             <div class="flex flex-col w-full pb-6">
@@ -136,6 +136,46 @@
                             &nbsp;&nbsp;&nbsp;<---Nuevo Item
                         </div>
                     </div>
+                    <div class="w-full text-blue-400 bg-gray-200 p-2 flex flex-row space-x-3">
+                        <div class="w-1/12 flex justify-center">
+                        </div>  
+                        <div class="w-1/12">
+                            <x-jet-label value="Ingreso (Moneda)" />
+                            <select wire:model='secciones.{{$index}}.i_moneda' class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                <option value=""></option>
+                                @foreach($monedas as $registro)
+                                    <option value="{{$registro->id}}">{{$registro->nombre}}</option>
+                                @endforeach
+                            </select>
+                            @error('secciones.'.$index.'.i_moneda') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        </div>
+
+                        @if($secciones[$index]['i_moneda']>1)
+                        <div class="w-1/12">
+                            <x-jet-label value="TC (Ingreso)" />
+                            <x-jet-input class="p-2 w-full text-xs text-gray-700" wire:model='secciones.{{$index}}.i_tc'/>
+                            @error('secciones.'.$index.'.i_tc') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        </div>
+                        @endif
+
+                        <div class="w-1/12">
+                            <x-jet-label value="Costo (Moneda)" />
+                            <select wire:model="secciones.{{$index}}.c_moneda" class="w-full text-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
+                                <option value=""></option>
+                                @foreach($monedas as $registro)
+                                    <option value="{{$registro->id}}">{{$registro->nombre}}</option>
+                                @endforeach
+                            </select>
+                            @error('secciones.'.$index.'.c_moneda') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        </div>
+                        @if($secciones[$index]['c_moneda']>1)
+                        <div class="w-1/12">
+                            <x-jet-label value="TC (Costo)" />
+                            <x-jet-input class="p-2 w-full text-xs text-gray-700" wire:model='secciones.{{$index}}.c_tc'/>
+                            @error('secciones.'.$index.'.c_tc') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                        </div>
+                        @endif
+                    </div>
                     <div class="flex flex-row bg-green-200 font-bold w-full">
                         <div class="w-full flex flex-row">
                             <div class="w-1/12 flex justify-center">Tipo
@@ -144,23 +184,23 @@
                             </div>
                             <div class="w-2/12 flex justify-center">Mayorista
                             </div>
-                            <div class="w-1/12 flex justify-center">Cantidad
-                            </div>   
-                            <div class="w-1/12 flex justify-center">Unitario
+                            <div class="w-2/12 flex justify-center">Fabricante
+                            </div>
+                            <div class="w-2/12 flex justify-center">Cantidad
                             </div>    
-                            <div class="w-1/12 flex justify-center">Total
+                            <div class="w-2/12 flex justify-center">Total
                             </div> 
-                            <div class="w-1/12 flex justify-center bg-red-300">Costo Unitario
-                            </div>    
-                            <div class="w-1/12 flex justify-center bg-red-300">Costo Total
+                            <div class="w-2/12 flex justify-center bg-red-300">Costo Total
                             </div> 
+                            <div class="w-1/12 flex justify-center">
+                            </div>
                         </div>                        
                     </div>
                     @foreach($secciones[$index]['items'] as $index2=>$item)
                     <div class="flex flex-row w-full">
                         <div class="w-full flex flex-row">
                             <div class="pt-1 px-1 w-1/12">
-                                <select wire:model="secciones.{{$index}}.items.{{$index2}}.tipo" class="py-1 px-2 w-full text-xs border-gray-100 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
+                                <select wire:model.defer="secciones.{{$index}}.items.{{$index2}}.tipo" class="py-1 px-2 w-full text-xs border-gray-100 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
                                     <option value=""></option>                                   
                                     <option value="On Premise">On Premise</option>                                   
                                     <option value="Suscripcion">Suscripcion</option>                                   
@@ -169,7 +209,7 @@
                                 @error('secciones.'.$index.'.items.'.$index2.'.tipo') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>
                             <div class="pt-1 px-1 w-4/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.descripcion"/>
+                                <x-jet-input class="pt-1 px-2 w-full" wire:model.defer="secciones.{{$index}}.items.{{$index2}}.descripcion"/>
                                 @error('secciones.'.$index.'.items.'.$index2.'.descripcion') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>
                             <div class="pt-1 px-1 w-2/12">
@@ -181,26 +221,32 @@
                                 </select>
                                 @error('secciones.'.$index.'.items.'.$index2.'.partner') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>
-                            <div class="pt-1 px-1 w-1/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.cantidad" wire:change="actualiza_item({{$index}},{{$index2}})"/>
+                            <div class="pt-1 px-1 w-2/12">
+                                <select wire:model.defer="secciones.{{$index}}.items.{{$index2}}.fabricante" class="py-1 px-2 w-full text-xs border-gray-100 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded shadow-sm">
+                                    <option value=""></option>
+                                    @foreach($fabricantes as $opcion)
+                                        @if($opcion->partner_id==$secciones[$index]['items'][$index2]['partner'])
+                                            <option value="{{$opcion->id}}">{{$opcion->nombre}}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                                @error('secciones.'.$index.'.items.'.$index2.'.partner') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
+                            </div>
+                            <div class="pt-1 px-1 w-2/12">
+                                <x-jet-input class="pt-1 px-2 w-full" wire:model.defer="secciones.{{$index}}.items.{{$index2}}.cantidad" wire:change="actualiza_item({{$index}},{{$index2}})"/>
                                 @error('secciones.'.$index.'.items.'.$index2.'.cantidad') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>  
-                            <div class="pt-1 px-1 w-1/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.unitario_cliente" wire:change="actualiza_item({{$index}},{{$index2}})"/>
-                                @error('secciones.'.$index.'.items.'.$index2.'.unitario_cliente') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
-                            </div>  
-                            <div class="pt-1 px-1 w-1/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.total_cliente" wire:change="actualiza_item({{$index}},{{$index2}})"/>
+                            <div class="pt-1 px-1 w-2/12">
+                                <x-jet-input class="pt-1 px-2 w-full" wire:model.defer="secciones.{{$index}}.items.{{$index2}}.total_cliente" wire:change="actualiza_item({{$index}},{{$index2}})"/>
                                 @error('secciones.'.$index.'.items.'.$index2.'.total_cliente') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>
-                            <div class="pt-1 px-1 w-1/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.unitario_tecnomedia" wire:change="actualiza_item({{$index}},{{$index2}})"/>
-                                @error('secciones.'.$index.'.items.'.$index2.'.unitario_tecnomedia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
-                            </div>  
-                            <div class="pt-1 px-1 w-1/12">
-                                <x-jet-input class="pt-1 px-2 w-full" wire:model="secciones.{{$index}}.items.{{$index2}}.total_tecnomedia" wire:change="actualiza_item({{$index}},{{$index2}})"/>
+                            <div class="pt-1 px-1 w-2/12">
+                                <x-jet-input class="pt-1 px-2 w-full" wire:model.defer="secciones.{{$index}}.items.{{$index2}}.total_tecnomedia" wire:change="actualiza_item({{$index}},{{$index2}})"/>
                                 @error('secciones.'.$index.'.items.'.$index2.'.total_tecnomedia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                             </div>  
+                            <div class="w-1/12 flex justify-center">
+                                <i class="fas fa-minus-circle text-red-400 text-2xl" style="cursor:pointer" wire:click='eliminar_item({{$index}},{{$index2}})'></i>
+                            </div>
                         </div>                        
                     </div>
                     @endforeach
