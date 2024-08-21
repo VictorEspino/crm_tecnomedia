@@ -110,10 +110,10 @@
                 ?>
                     <tr class="">
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
-                            @livewire('proyecto.editar-proyecto',['id_proyecto'=>$reg->id,'prospecto'=>$reg->prospecto->razon_social,'nombre'=>$reg->nombre,'key'=>$reg->id])
+                            @livewire('proyecto.editar-proyecto',['id_proyecto'=>$reg->id,'prospecto'=>$reg->prospecto->razon_social,'nombre'=>$reg->nombre],key($reg->id))
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
-                            @livewire('documentos.documentos-proyecto',['id_proyecto'=>$reg->id,'prospecto'=>$reg->prospecto->razon_social,'nombre'=>$reg->nombre,'key'=>5600+$reg->id])
+                            @livewire('documentos.documentos-proyecto',['id_proyecto'=>$reg->id,'prospecto'=>$reg->prospecto->razon_social,'nombre'=>$reg->nombre],key(5000+$reg->id))
                         </td>
                         <td class="border border-gray-300 font-light {{$color?'bg-lime-100':''}} text-gray-700 p-1 text-xs">
                             <a href="{{route('finanzas_registros',['id_proyecto'=>$reg->id])}}">

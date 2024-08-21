@@ -13,8 +13,9 @@ class DocumentosController extends Controller
     public function nuevo_doc_cliente(Request $request)
     {
         $upload_path = ruta_archivos();
+        return($request);
         try{
-            $file_name = $request->archivo->getClientOriginalName();
+            $file_name = $request->file('archivo')->getClientOriginalName();
             $generated_new_name = $request->tipo.'_'.time().'.'.$request->archivo->getClientOriginalExtension();
             $request->archivo->move($upload_path, $generated_new_name);
         }

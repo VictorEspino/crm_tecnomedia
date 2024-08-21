@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Prospecto;
 use App\Models\Licencia;
 use App\Models\Proyecto;
+use App\Models\ProyectoDocumento;
 use App\Models\ProyectoLicenciaSeccion;
 use App\Models\ProyectoLicenciaSeccionItem;
 
@@ -56,6 +57,7 @@ class DetalleCliente extends Component
         $this->ciudad=$prospecto->ciudad;
         $this->pais=$prospecto->pais;
         $this->licencias=Licencia::with('linea_negocio','moneda')->where('prospecto_id',$this->id_prospecto)->get();
+        $this->proyectos_activos=[];
 
         $fecha_actual = date("Y-m-d");
         $proyectos_activos=Proyecto::with('negocio')
@@ -179,6 +181,18 @@ class DetalleCliente extends Component
 
                                     ];
             }
+            $documentos=ProyectoDocumento::where('id_proyecto',$proy->id)->get();
+            $documentos_proyecto=[];
+            $n_documentos=0;
+            foreach($documentos as $doc_proy)
+            {
+                $documentos_proyecto[]=[
+                                            'tipo'=>$doc_proy->tipo,
+                                            'vigencia'=>$doc_proy->vigencia,
+                                            'documento'=>$doc_proy->documento,
+                                        ];
+                $n_documentos=$n_documentos+1;
+            }
             $this->proyectos_activos[]=[
                                         'fecha_inicio'=>$proy->fecha_inicio,
                                         'fecha_fin'=>$proy->fecha_fin,
@@ -188,6 +202,8 @@ class DetalleCliente extends Component
                                         'secciones_activas'=>$secciones_activas,
                                         'secciones_previas'=>$secciones_previas,
                                         'secciones_siguientes'=>$secciones_siguientes,
+                                        'documentos'=>$documentos_proyecto,
+                                        'n_documentos'=>$n_documentos
                                        ];
         }
 
@@ -195,5 +211,6 @@ class DetalleCliente extends Component
     public function cancelar()
     {
         $this->open=false;
+        $this->proyectos_activos=[];
     }
 }

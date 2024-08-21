@@ -14,7 +14,7 @@
                 <div class="w-full text-xl font-bold">{!!$prospecto!!}</div>
                 <div class="w-full text-base font-bold pb-3">{!!$nombre!!}</div>
                 <div class="w-full text-sm bg-gray-700 text-gray-100 px-3 py-1 rounded">Nuevo Documento</div>                
-                <form action="{{route('nuevo_doc_proyecto')}}" method="POST" enctype="multipart/form-data" id="nuevo_doc_proyecto">
+                <form action="{{route('nuevo_doc_proyecto')}}" method="POST" enctype="multipart/form-data" id="nuevo_doc_proyecto_{{$id_proyecto}}">
                 @csrf
                 <input type="hidden" name="id_proyecto" value="{{$id_proyecto}}">
                 <div class="w-full pt-2 flex flex-row space-x-5 pb-2">
@@ -23,6 +23,7 @@
                         <select wire:model.defer="tipo" name="tipo" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">    
                             <option value=""></option>
                             <option value="ANEXO">ANEXO</option>
+                            <option value="APENDICE">APENDICE</option>
                             <option value="ORDEN_SERVICIO">ORDEN_SERVICIO</option>
                             <option value="ORDEN_COMPRA">ORDEN_COMPRA</option>
                         </select>

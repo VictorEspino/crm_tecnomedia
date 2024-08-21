@@ -81,7 +81,7 @@ class DocumentosProyecto extends Component
     {
         $this->validacion();  
         $this->procesando=1;                     
-        $this->emit('livewire_to_controller','nuevo_doc_proyecto');
+        $this->emit('livewire_to_controller','nuevo_doc_proyecto_'.$this->id_proyecto);
         
     }
 

@@ -36,12 +36,35 @@
             </div>
             <div class="w-full text-bold text-indigo-500 text-xl border-t border-b">Proyectos Activos</div>
             @foreach($proyectos_activos as $proy)
-            <div class="w-full text-gray-700 text-sm px-3 py-2 flex flex-col"> <!-- Encabezado -->
+            <div class="w-full text-gray-700 text-sm px-3 pt-2 flex flex-col"> <!-- Encabezado -->
                     <div class="w-full text-2xl font-bold text-blue-400">{{$proy['nombre']}}</div> 
                     <div class="w-full text-base font-bold text-orange-400">{{$proy['negocio']}}</div>
             </div><!-- FIN Encabezado -->
             <div class="flex flex-col md:space-x-5 md:space-y-0 items-start md:flex-row text-sm">
                 <div class="w-full md:w-1/2 flex flex-col justify-center md:p-5 p-3">
+                    <div class="w-full text-gray-700 text-sm px-3 flex flex-col pb-3">
+                        <div class="w-full text-base font-bold text-green-400">Documentos</div> 
+                        <div class="w-full text-sm text-gray-700 flex flex-col">
+                            @if($proy['n_documentos']=="0")
+                                <div class="w-full flex flex-row">
+                                    <div class="w-full text-red-400 flex justify-center">No existen documentos que mostrar</div>
+                                </div>
+                            @else
+                                <div class="w-full flex flex-row bg-gray-500 text-gray-100 rounded">
+                                    <div class="w-1/3 flex justify-center">Tipo</div>
+                                    <div class="w-1/3 flex justify-center">Vigencia</div>
+                                    <div class="w-1/3 flex justify-center">Download</div>
+                                </div>
+                                @foreach($proy['documentos'] as $doc_proyecto)
+                                <div class="w-full flex flex-row">
+                                    <div class="w-1/3 flex justify-center">{{$doc_proyecto['tipo']}}</div>
+                                    <div class="w-1/3 flex justify-center">{{$doc_proyecto['vigencia']}}</div>
+                                    <div class="w-1/3 flex justify-center"><a target="_blank" href="/archivos/{{$doc_proyecto['documento']}}"><i class="text-red-400 font-bold text-xl fas fa-download"></i></a></div>
+                                </div>
+                                @endforeach
+                            @endif    
+                        </div>    
+                    </div>
                     <div class="w-full bg-gray-200 flex flex-col p-2 rounded-t-lg">Etapas activas</div>
                     <div class="w-full flex flex-col border rounded-b-lg shadow-lg pb-5">  
                         @foreach ($proy['secciones_activas'] as $seccion)

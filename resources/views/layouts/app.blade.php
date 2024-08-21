@@ -264,8 +264,10 @@
 
                 <div class="max-w-7xl mx-auto py-4 px-2 sm:px-2 px-4 flex justify-between flex-row">
                     <div class="flex">
+                        @if(Auth::user()->area!="5")
                         <span onclick="openNav()" class="text-lime-900 font-bold text-2xl">
                         <i class="fas fa-bars"></i></span>
+                        @endif
                     </div>
                     <div> 
                         <h2 class="font-semibold leading-tight text-ttds text-lg">    

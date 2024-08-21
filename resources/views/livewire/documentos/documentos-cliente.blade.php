@@ -19,7 +19,7 @@
                 <div class="w-full pt-2 flex flex-row space-x-5 pb-2">
                     <div class="w-1/4">
                         <x-jet-label value="Tipo" />
-                        <select wire:model.defer="tipo" name="tipo" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">    
+                        <select wire:model="tipo" name="tipo" class="w-full text-xs border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">    
                             <option value=""></option>
                             <option value="SITUACION_FISCAL">SITUACION FISCAL</option>
                             <option value="NDA">NDA</option>
@@ -29,13 +29,14 @@
                     </div>
                     <div class="w-1/4">
                         <x-jet-label value="Vigencia" />
-                        <x-jet-input class="w-full text-xs" type="date" name='vigencia' wire:model.defer='vigencia'/>
+                        <x-jet-input class="w-full text-xs" type="date" name='vigencia' wire:model='vigencia'/>
                         @error('vigencia') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                     <div class="w-1/2 pb-3">
                         <x-jet-label value="Archivo" />
-                        <input class="w-full text-xs py-2" type="file" name='archivo' wire:change="archivo_seleccionado($event.target.value)"/>                        
-                        <input type="hidden" wire:model="archivo_valor">
+                        <input class="w-full text-xs py-2" type="file" name="archivo" wire:change="archivo_seleccionado($event.target.value)"/>                        
+                        <input type="hidden" wire:model="archivo_valor" />
+                        <input type='file' name='archivo2'>
                         @error('archivo_valor') <span class="text-xs text-red-400">{{ $message }}</span> @enderror
                     </div>
                 </div>
