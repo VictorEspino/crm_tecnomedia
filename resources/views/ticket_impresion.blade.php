@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ mix('css/app.css') }}?{{rand()}}">
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script src="https://kit.fontawesome.com/a692f93986.js" crossorigin="anonymous"></script>
     <title>Actividad {{ticket($ticket_id)}}</title>
 </head>

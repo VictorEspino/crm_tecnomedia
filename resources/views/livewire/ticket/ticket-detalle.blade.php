@@ -195,7 +195,9 @@
                 <div class="py-1 px-3 font-bold text-gray-500 text-sm">
                     Asesor 
                     @if($estatus==1)
-                    <span class="text-xs text-blue-500" style="cursor: pointer;" wire:click="open_reasignar_modal">reasignar</span>
+                        @if(Auth::user()->area!="5") <!--Evita que un cliente pueda reasignar-->
+                            <span class="text-xs text-blue-500" style="cursor: pointer;" wire:click="open_reasignar_modal">reasignar</span>
+                        @endif    
                     @endif
                 </div>
             </div>
@@ -209,8 +211,8 @@
                     <div class="w-full flex justify-center font-bold text-gray-500 text-sm">Prioridad</div>
                     <div class="w-full flex justify-center pt-3">
                         <div class="w-20 flex justify-center px-2 items-start">
-                            <div class="w-full py-1 px-3 bg-green-400 text-gray-100 text-xs font-semibold flex justify-center rounded">
-                                Normal
+                            <div class="w-full py-1 px-3 {{$prioridad=="1"?'bg-green-400':'bg-red-400'}} text-gray-100 text-xs font-semibold flex justify-center rounded">
+                                {{$prioridad=="1"?'Normal':'Alta'}}
                             </div>
                         </div>
 

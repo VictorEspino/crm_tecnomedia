@@ -243,7 +243,7 @@ class UpdateCotizacion extends Component
                     'secciones.'.$index.'.items.'.$index2.'.cantidad' => ['numeric', 'min:1'],
                     'secciones.'.$index.'.items.'.$index2.'.descripcion' => 'required',
                     'secciones.'.$index.'.items.'.$index2.'.unidad' => 'required',
-                    'secciones.'.$index.'.items.'.$index2.'.unitario' => ['numeric', 'min:1'],
+                    'secciones.'.$index.'.items.'.$index2.'.unitario' => ['numeric', 'min:0'],
                   ]);
                 
             }

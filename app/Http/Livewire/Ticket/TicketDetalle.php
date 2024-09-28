@@ -47,6 +47,7 @@ class TicketDetalle extends Component
     public $subarea_solicitante;
     public $asignado_a;
     public $asesor;
+    public $prioridad;
 
     public $estatus;
 
@@ -96,6 +97,7 @@ class TicketDetalle extends Component
         $this->resultado_autorizacion=$ticket->resultado_autorizacion;
         $this->estatus=$ticket->estatus;
         $this->asignado_a=$ticket->asignado_a;
+        $this->prioridad=$ticket->prioridad;
 
         if($ticket->estatus=='1')
         {

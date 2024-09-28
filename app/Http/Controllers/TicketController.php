@@ -18,6 +18,11 @@ use App\Models\InvitadoTicket;
 use App\Models\MiembroGrupo;
 use App\Models\User;
 
+use Exception;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SpeedyMail;
+use App\Models\NotificacionDestinoSpeedy;
+
 class TicketController extends Controller
 {
     public function ticket(Request $request)
@@ -312,6 +317,7 @@ class TicketController extends Controller
             }
         }
         //return(view('ticket',['id'=>$ticket->id]));
+        $this->postSaveProcess($ticket->id);
         return redirect()->route('ticket',['id'=>$ticket->id]);
     }
     private function obtenerAsignacion($tipo,$grupo_id,$automatico,$seleccionada)
@@ -745,5 +751,62 @@ class TicketController extends Controller
         }
 
         return($avances);
+    }
+
+    private function postSaveProcess($ticket_id)
+    {
+        $ticket_obj=Ticket::with('solicitante','topico')->where('id',$ticket_id)->get()->first();
+        if($ticket_obj->topico_id==163) //Atencion a clientes SPEEDY MOVIL
+        {
+            $actividad=ActividadTicket::where('ticket_id',$ticket_id)->where('secuencia',0)->get()->first();
+            $actividad_campos=ActividadTicketCampos::where('actividad_ticket_id',$actividad->id)->get();
+            $destino='ignacio.espino@gmail.com';
+            $adjunto='ignacio.espino@gmail.com';
+            $ticket=folio($ticket_id);
+            $consultor='';
+            $solicitante=$ticket_obj->solicitante->name;
+            $severidad='';
+            $tecnologia='';
+            $descripcion=$actividad->descripcion;
+            $creacion=$ticket_obj->created_at;
+
+            foreach($actividad_campos as $reg)
+            {
+                if($reg->etiqueta=='Severidad')
+                {
+                    $severidad=$reg->valor;
+                }
+                if($reg->etiqueta=='Tecnologia')
+                {
+                    $tecnologia=$reg->valor;
+                    $involucrados=NotificacionDestinoSpeedy::with('consultor','apoyo')->where('tecnologia',$tecnologia)->get()->first();
+                    $destino=$involucrados->consultor->email;
+                    $adjunto=$involucrados->apoyo->email;
+                    $consultor=$involucrados->consultor->name;
+
+
+                    //$destino=$adjunto="ignacio.espino@gmail.com";
+                    //$consultor="Victor Ignacio Espino";
+
+                    Ticket::where('id',$ticket_id)
+                        ->update(['asignado_a'=>$involucrados->titular]);
+
+                    //dd("destino=".$destino.", consultor=".$consultor.", apoyo=".$adjunto);
+                }
+            }
+
+            Mail::to($destino)
+                    ->send(new SpeedyMail(
+                        $destino,
+                        $adjunto,
+                        $ticket,
+                        $consultor,
+                        $solicitante,
+                        $severidad,
+                        $tecnologia,
+                        $descripcion,
+                        $creacion
+                        ));
+        }
     }
 }

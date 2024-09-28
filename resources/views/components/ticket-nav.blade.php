@@ -6,6 +6,7 @@
     <div class="border-l-4 border-gray-300 flex items-center px-5 text-gray-600 {{request()->routeIs('tickets')?'bg-blue-200':''}}">
         <a href="{{route('tickets')}}">Tablero</a>
     </div>
+    @if(Auth::user()->area!="5")
     <div class="border-l-4 border-gray-300 flex items-center px-5 text-gray-600 {{request()->routeIs('tickets_abiertos')?'bg-blue-200':''}}">
         <a href="{{route('tickets_abiertos')}}">Actividades Abiertas</a>
     </div>
@@ -15,6 +16,7 @@
     <div class="border-l-4 border-gray-300 flex items-center px-5 text-gray-600 {{request()->routeIs('reportes')?'bg-blue-200':''}}">
         <a href="{{route('reportes')}}">Reportes</a>
     </div>
+    @endif
     <div class="flex-1 justify-end border-l-4 border-r-4 border-gray-300 flex items-center px-5 text-gray-600">
         @livewire('ticket.nuevo-ticket')
     </div>
